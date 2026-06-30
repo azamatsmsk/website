@@ -233,7 +233,27 @@ section{padding:6rem 5vw}
 .demo-pill{padding:.45rem 1rem;border:1px solid rgba(255,255,255,.1);border-radius:100px;font-size:.8rem;cursor:pointer;color:var(--muted);transition:all .2s;font-family:var(--font-head);letter-spacing:.04em}
 .demo-pill:hover{border-color:var(--accent);color:var(--white)}
 
-/* CONTACT */
+/* TRADE-IN */
+#tradein{background:var(--gray)}
+.tradein-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start}
+.tradein-steps{display:flex;flex-direction:column;gap:1.2rem;margin-bottom:2rem}
+.ts-item{display:flex;gap:1rem;align-items:flex-start}
+.ts-num{width:32px;height:32px;border-radius:50%;background:rgba(255,61,61,.12);border:1px solid rgba(255,61,61,.3);display:flex;align-items:center;justify-content:center;font-family:var(--font-head);font-size:.8rem;font-weight:700;color:var(--accent);flex-shrink:0}
+.ts-text h4{font-family:var(--font-head);font-size:.88rem;font-weight:700;margin-bottom:.2rem}
+.ts-text p{font-size:.82rem;color:var(--muted);line-height:1.5}
+.price-table{display:grid;grid-template-columns:1fr;gap:.6rem;margin-top:1.5rem}
+.price-row{display:flex;justify-content:space-between;align-items:center;background:var(--card-bg);border:1px solid rgba(255,255,255,.06);border-radius:10px;padding:.8rem 1.1rem}
+.price-row-label{font-size:.85rem}
+.price-row-val{font-family:var(--font-head);font-size:.85rem;font-weight:700;color:var(--accent)}
+.condition-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:.6rem;margin-bottom:1rem}
+.condition-btn{padding:.7rem;border-radius:8px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.03);color:var(--muted);font-size:.82rem;cursor:pointer;text-align:center;transition:all .2s}
+.condition-btn.active{background:rgba(255,61,61,.12);border-color:var(--accent);color:var(--white)}
+.estimate-box{background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.25);border-radius:12px;padding:1.2rem;margin-top:1rem;display:none}
+.estimate-box.show{display:block}
+.estimate-label{font-size:.75rem;color:var(--muted);margin-bottom:.3rem}
+.estimate-val{font-family:var(--font-head);font-size:1.6rem;font-weight:900;color:var(--green)}
+
+
 #contact{background:var(--gray)}
 .contact-inner{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start}
 .contact-items{display:flex;flex-direction:column;gap:1.2rem}
@@ -310,6 +330,7 @@ footer ul a:hover{color:var(--white)}
     <li><a href="#reviews">Отзывы</a></li>
     <li><a href="#tracker">Статус</a></li>
     <li><a href="#cabinet">Кабинет</a></li>
+    <li><a href="#tradein">Сдать телефон</a></li>
     <li><a href="#contact">Контакты</a></li>
     <li><a href="master.html" style="color:var(--accent)">Мастерам 🔧</a></li>
   </ul>
@@ -615,6 +636,96 @@ footer ul a:hover{color:var(--white)}
         <div class="demo-pill" onclick="loadDemo('МФ-2025-0067')">МФ-2025-0067 · В ремонте</div>
         <div class="demo-pill" onclick="loadDemo('МФ-2025-0091')">МФ-2025-0091 · Готово</div>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRADE-IN: ПРИЁМ ТЕЛЕФОНОВ -->
+<section id="tradein">
+  <div class="tradein-grid">
+    <div class="reveal">
+      <div class="section-tag">Скупка техники</div>
+      <h2 class="section-title">Сдайте старый телефон<br><em style="color:var(--accent);font-style:normal">— получите деньги сразу</em></h2>
+      <p style="color:var(--muted);font-size:.95rem;line-height:1.7;margin-bottom:1.5rem">Принимаем смартфоны в любом состоянии — рабочие, разбитые, не включаются. Оценка бесплатно, деньги наличными или на карту в день сдачи.</p>
+
+      <div class="tradein-steps">
+        <div class="ts-item">
+          <div class="ts-num">1</div>
+          <div class="ts-text"><h4>Узнайте примерную цену</h4><p>Выберите модель и состояние телефона ниже — увидите оценочную стоимость.</p></div>
+        </div>
+        <div class="ts-item">
+          <div class="ts-num">2</div>
+          <div class="ts-text"><h4>Оставьте заявку</h4><p>Укажем удобное время и адрес — приедем сами или примем в офисе.</p></div>
+        </div>
+        <div class="ts-item">
+          <div class="ts-num">3</div>
+          <div class="ts-text"><h4>Получите деньги</h4><p>Точную сумму назовём при осмотре, оплата сразу наличными или Kaspi переводом.</p></div>
+        </div>
+      </div>
+
+      <div class="price-table">
+        <div class="price-row"><span class="price-row-label">iPhone 13 / 14 / 15 серии</span><span class="price-row-val">80 000 – 280 000 ₸</span></div>
+        <div class="price-row"><span class="price-row-label">iPhone X / 11 / 12 серии</span><span class="price-row-val">35 000 – 110 000 ₸</span></div>
+        <div class="price-row"><span class="price-row-label">Samsung Galaxy S/Note</span><span class="price-row-val">30 000 – 180 000 ₸</span></div>
+        <div class="price-row"><span class="price-row-label">Разбитые / неисправные</span><span class="price-row-val">5 000 – 40 000 ₸</span></div>
+      </div>
+      <p style="font-size:.74rem;color:var(--muted);margin-top:.8rem">* Цены ориентировочные, зависят от точной модели, объёма памяти и состояния. Финальную цену называем при осмотре.</p>
+    </div>
+
+    <div class="form-card reveal">
+      <div class="form-title">Оценить и сдать телефон</div>
+
+      <div class="form-group">
+        <label>Марка и модель</label>
+        <select id="ti-device">
+          <option value="">— Выберите —</option>
+          <optgroup label="Apple iPhone">
+            <option data-min="180000" data-max="280000">iPhone 15 Pro Max / Pro</option>
+            <option data-min="120000" data-max="190000">iPhone 15 / 14 Pro</option>
+            <option data-min="90000" data-max="150000">iPhone 14 / 13 Pro</option>
+            <option data-min="60000" data-max="100000">iPhone 13 / 12 Pro</option>
+            <option data-min="35000" data-max="65000">iPhone 12 / 11</option>
+            <option data-min="20000" data-max="40000">iPhone X / XS / XR</option>
+            <option data-min="10000" data-max="22000">iPhone 7 / 8</option>
+          </optgroup>
+          <optgroup label="Samsung">
+            <option data-min="100000" data-max="180000">Galaxy S24 / S23 Ultra</option>
+            <option data-min="60000" data-max="110000">Galaxy S23 / S22</option>
+            <option data-min="30000" data-max="60000">Galaxy A54 / A55</option>
+            <option data-min="15000" data-max="30000">Galaxy A-серия (старые)</option>
+          </optgroup>
+          <optgroup label="Другие">
+            <option data-min="20000" data-max="60000">Xiaomi флагман</option>
+            <option data-min="10000" data-max="25000">Xiaomi Redmi</option>
+            <option data-min="5000" data-max="15000">Другой / не знаю модель</option>
+          </optgroup>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Состояние телефона</label>
+        <div class="condition-grid">
+          <div class="condition-btn" data-mult="1" onclick="selectCondition(this)">Отличное</div>
+          <div class="condition-btn" data-mult="0.8" onclick="selectCondition(this)">Хорошее</div>
+          <div class="condition-btn" data-mult="0.5" onclick="selectCondition(this)">Есть царапины/сколы</div>
+          <div class="condition-btn" data-mult="0.25" onclick="selectCondition(this)">Разбит / не включается</div>
+        </div>
+      </div>
+
+      <div class="estimate-box" id="ti-estimate">
+        <div class="estimate-label">Примерная оценка</div>
+        <div class="estimate-val" id="ti-estimate-val">—</div>
+      </div>
+
+      <div class="form-row" style="margin-top:1rem">
+        <div class="form-group"><label>Ваше имя</label><input type="text" id="ti-name" placeholder="Алия"/></div>
+        <div class="form-group"><label>Телефон</label><input type="tel" id="ti-phone" placeholder="+7 700 000-00-00"/></div>
+      </div>
+      <div class="form-group"><label>Комментарий</label><textarea id="ti-comment" placeholder="Объём памяти, год покупки, дефекты..."></textarea></div>
+
+      <div class="auth-error" id="ti-error"></div>
+      <div class="auth-success" id="ti-success"></div>
+      <button class="btn btn-primary btn-full" onclick="submitTradeIn()" id="btn-ti">Оставить заявку на сдачу →</button>
     </div>
   </div>
 </section>
@@ -930,6 +1041,82 @@ function showOrder(id) {
     <div class="detail-box"><div class="detail-label">Стоимость</div><div class="detail-value" style="color:var(--accent)">${order.price}</div></div>
     <div class="detail-box"><div class="detail-label">Гарантия</div><div class="detail-value">12 месяцев</div></div>`;
   setTimeout(() => card.classList.add('visible'), 50);
+}
+
+// ─── TRADE-IN (СДАЧА ТЕЛЕФОНА) ───
+let tiSelectedMult = null;
+
+function selectCondition(el) {
+  document.querySelectorAll('.condition-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  tiSelectedMult = parseFloat(el.dataset.mult);
+  updateEstimate();
+}
+
+document.getElementById('ti-device').addEventListener('change', updateEstimate);
+
+function updateEstimate() {
+  const select = document.getElementById('ti-device');
+  const opt = select.options[select.selectedIndex];
+  const box = document.getElementById('ti-estimate');
+  const val = document.getElementById('ti-estimate-val');
+
+  if (!opt || !opt.dataset.min || tiSelectedMult === null) {
+    box.classList.remove('show');
+    return;
+  }
+
+  const min = Math.round(parseInt(opt.dataset.min) * tiSelectedMult / 1000) * 1000;
+  const max = Math.round(parseInt(opt.dataset.max) * tiSelectedMult / 1000) * 1000;
+  val.textContent = min.toLocaleString('ru-KZ') + ' – ' + max.toLocaleString('ru-KZ') + ' ₸';
+  box.classList.add('show');
+}
+
+async function submitTradeIn() {
+  const select = document.getElementById('ti-device');
+  const device = select.value;
+  const name = document.getElementById('ti-name').value.trim();
+  const phone = document.getElementById('ti-phone').value.trim();
+  const comment = document.getElementById('ti-comment').value.trim();
+  const errEl = document.getElementById('ti-error');
+  const sucEl = document.getElementById('ti-success');
+  errEl.classList.remove('show'); sucEl.classList.remove('show');
+
+  if (!device || !name || !phone || tiSelectedMult === null) {
+    errEl.textContent = 'Заполните модель, состояние, имя и телефон';
+    errEl.classList.add('show');
+    return;
+  }
+
+  const opt = select.options[select.selectedIndex];
+  const min = Math.round(parseInt(opt.dataset.min) * tiSelectedMult / 1000) * 1000;
+  const max = Math.round(parseInt(opt.dataset.max) * tiSelectedMult / 1000) * 1000;
+  const estimate = min.toLocaleString('ru-KZ') + ' – ' + max.toLocaleString('ru-KZ') + ' ₸';
+
+  const btn = document.getElementById('btn-ti');
+  btn.innerHTML = '<span class="loading-spinner"></span>Отправляем...';
+  btn.disabled = true;
+
+  const { error } = await sb.from('tradein_requests').insert({
+    device, name, phone, comment,
+    estimate,
+    user_id: currentUser ? currentUser.id : null
+  });
+
+  btn.innerHTML = 'Оставить заявку на сдачу →';
+  btn.disabled = false;
+
+  if (error) {
+    errEl.textContent = 'Ошибка отправки. Попробуйте позвонить нам напрямую.';
+    errEl.classList.add('show');
+    return;
+  }
+
+  sucEl.textContent = '✅ Заявка отправлена! Перезвоним для согласования времени осмотра.';
+  sucEl.classList.add('show');
+  document.getElementById('ti-name').value = '';
+  document.getElementById('ti-phone').value = '';
+  document.getElementById('ti-comment').value = '';
 }
 
 // ─── CONTACT FORM ───
