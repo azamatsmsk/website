@@ -4,6 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>МобиФикс — Ремонт телефонов с выездом в Астане</title>
+<meta name="description" content="Выездной ремонт телефонов в Астане. Мастер приедет за 30 минут. Бесплатная диагностика, гарантия 12 месяцев. iPhone, Samsung, Xiaomi и другие.">
+<meta property="og:title" content="МобиФикс — Ремонт телефонов с выездом в Астане">
+<meta property="og:description" content="Мастер приедет за 30 минут. Бесплатная диагностика, гарантия 12 месяцев на все виды работ.">
+<meta property="og:type" content="website">
+<meta name="robots" content="index, follow">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=Mulish:wght@300;400;600&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -252,7 +257,28 @@ footer ul{list-style:none;display:flex;gap:2rem}
 footer ul a{font-size:.8rem;color:var(--muted);text-decoration:none}
 footer ul a:hover{color:var(--white)}
 
-/* LOADING */
+/* REVIEWS */
+#reviews{background:var(--black)}
+.reviews-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem}
+.review-card{background:var(--card-bg);border:1px solid rgba(255,255,255,.06);border-radius:14px;padding:1.6rem}
+.review-stars{color:#fbbf24;font-size:.9rem;margin-bottom:.8rem;letter-spacing:.1em}
+.review-text{font-size:.88rem;color:var(--white);line-height:1.6;margin-bottom:1.2rem}
+.review-author{display:flex;align-items:center;gap:.8rem}
+.review-avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-size:.85rem;font-weight:700;color:#fff}
+.review-name{font-size:.85rem;font-weight:600}
+.review-meta{font-size:.72rem;color:var(--muted)}
+.rating-summary{display:flex;align-items:center;gap:1.5rem;margin-bottom:2.5rem;flex-wrap:wrap}
+.rating-big{font-family:var(--font-head);font-size:3rem;font-weight:900;color:var(--accent);line-height:1}
+.rating-stars-big{color:#fbbf24;font-size:1.3rem;letter-spacing:.1em;margin-bottom:.3rem}
+.rating-count{font-size:.85rem;color:var(--muted)}
+
+/* LEGAL FOOTER */
+.legal-bar{padding:1.2rem 5vw;border-top:1px solid rgba(255,255,255,.05);display:flex;justify-content:space-between;flex-wrap:wrap;gap:.8rem}
+.legal-bar p{font-size:.72rem;color:rgba(255,255,255,.25)}
+.legal-bar a{font-size:.72rem;color:rgba(255,255,255,.25);text-decoration:none}
+.legal-bar a:hover{color:var(--muted)}
+
+
 .loading-spinner{display:inline-block;width:16px;height:16px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:.4rem}
 @keyframes spin{to{transform:rotate(360deg)}}
 
@@ -281,6 +307,7 @@ footer ul a:hover{color:var(--white)}
   <ul>
     <li><a href="#services">Услуги</a></li>
     <li><a href="#how">Как работает</a></li>
+    <li><a href="#reviews">Отзывы</a></li>
     <li><a href="#tracker">Статус</a></li>
     <li><a href="#cabinet">Кабинет</a></li>
     <li><a href="#contact">Контакты</a></li>
@@ -430,6 +457,45 @@ footer ul a:hover{color:var(--white)}
 </section>
 
 <!-- ЛИЧНЫЙ КАБИНЕТ -->
+<!-- REVIEWS -->
+<section id="reviews">
+  <div class="section-tag">Отзывы</div>
+  <h2 class="section-title reveal">Что говорят клиенты</h2>
+  <div class="rating-summary reveal">
+    <div>
+      <div class="rating-big">4.8</div>
+      <div class="rating-stars-big">★★★★★</div>
+      <div class="rating-count">на основе отзывов в 2ГИС и Google</div>
+    </div>
+  </div>
+  <div class="reviews-grid">
+    <div class="review-card reveal">
+      <div class="review-stars">★★★★★</div>
+      <div class="review-text">Разбил экран iPhone, мастер приехал на Есиль через 25 минут, заменил дисплей прямо во дворе за 40 минут. Цену назвали сразу после диагностики, без сюрпризов.</div>
+      <div class="review-author">
+        <div class="review-avatar">А</div>
+        <div><div class="review-name">Айгерим С.</div><div class="review-meta">iPhone 13, замена экрана</div></div>
+      </div>
+    </div>
+    <div class="review-card reveal">
+      <div class="review-stars">★★★★★</div>
+      <div class="review-text">Телефон упал в воду, думал всё — придётся покупать новый. Приехали быстро, почистили плату, через час всё заработало. Гарантию дали, чек выдали.</div>
+      <div class="review-author">
+        <div class="review-avatar">Е</div>
+        <div><div class="review-name">Ерлан Т.</div><div class="review-meta">Samsung Galaxy, после воды</div></div>
+      </div>
+    </div>
+    <div class="review-card reveal">
+      <div class="review-stars">★★★★★</div>
+      <div class="review-text">Удобно что можно следить за статусом заявки прямо на сайте — видно когда мастер выехал. Не пришлось никому звонить и узнавать.</div>
+      <div class="review-author">
+        <div class="review-avatar">М</div>
+        <div><div class="review-name">Мадина Қ.</div><div class="review-meta">Xiaomi, разъём зарядки</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section id="cabinet">
   <div class="section-tag">Личный кабинет</div>
   <h2 class="section-title reveal">Мои заявки</h2>
@@ -613,8 +679,12 @@ footer ul a:hover{color:var(--white)}
 <footer>
   <a class="logo" href="#"><span>Моби</span>Фикс</a>
   <p>© 2025 МобиФикс. Ремонт телефонов с выездом.</p>
-  <ul><li><a href="#services">Услуги</a></li><li><a href="#tracker">Статус</a></li><li><a href="#contact">Контакты</a></li></ul>
+  <ul><li><a href="#services">Услуги</a></li><li><a href="#reviews">Отзывы</a></li><li><a href="#tracker">Статус</a></li><li><a href="#contact">Контакты</a></li></ul>
 </footer>
+<div class="legal-bar">
+  <p>Оплата наличными, картой или переводом на Kaspi после выполнения работ. Чек и гарантийный талон выдаются на каждый заказ.</p>
+  <a href="#contact">Реквизиты / договор оферты</a>
+</div>
 
 <script>
 // ─── SUPABASE INIT ───

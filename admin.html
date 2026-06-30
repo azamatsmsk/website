@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>МобиФикс — Админ-панель</title>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=Mulish:wght@300;400;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--black:#0e0e10;--accent:#ff3d3d;--accent2:#ff7a00;--white:#f8f5f0;--gray:#1c1c20;--card:#16161a;--muted:#888;--green:#22c55e;--font-head:'Unbounded',sans-serif;--font-body:'Mulish',sans-serif}
+body{background:var(--black);color:var(--white);font-family:var(--font-body);min-height:100vh}
+.wrap{max-width:900px;margin:0 auto;padding:3rem 1.5rem}
+.logo{font-family:var(--font-head);font-weight:900;font-size:1.3rem;margin-bottom:.3rem}
+.logo span{color:var(--accent)}
+.sub{color:var(--muted);font-size:.85rem;margin-bottom:2rem}
+.login-card{background:var(--card);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:2rem;max-width:380px;margin:4rem auto}
+.login-card h2{font-family:var(--font-head);font-size:1.1rem;margin-bottom:1.2rem}
+input{width:100%;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:.75rem 1rem;color:var(--white);font-size:.9rem;margin-bottom:.8rem;outline:none}
+input:focus{border-color:var(--accent)}
+button{background:var(--accent);color:#fff;border:none;border-radius:8px;padding:.8rem;width:100%;font-family:var(--font-head);font-size:.75rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;cursor:pointer}
+button:hover{opacity:.9}
+.err{color:#f87171;font-size:.82rem;margin-bottom:.8rem;display:none}
+.err.show{display:block}
+#panel{display:none}
+.req-card{background:var(--card);border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:1.2rem 1.5rem;margin-bottom:1rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+.req-device{font-family:var(--font-head);font-weight:700;font-size:.92rem}
+.req-issue{font-size:.82rem;color:var(--muted);margin:.2rem 0}
+.req-date{font-size:.72rem;color:rgba(255,255,255,.3)}
+select{background:var(--gray);color:var(--white);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:.5rem .8rem;font-size:.82rem}
+.logout{float:right;background:none;border:1px solid rgba(255,255,255,.15);width:auto;padding:.5rem 1rem;font-size:.7rem}
+.empty{text-align:center;color:var(--muted);padding:3rem}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="logo">Моби<span>Фикс</span> · Админ</div>
+  <div class="sub">Управление заявками на ремонт</div>
+
+  <div class="login-card" id="login-box">
+    <h2>Вход для мастера</h2>
+    <div class="err" id="login-err"></div>
+    <input type="email" id="email" placeholder="Email"/>
+    <input type="password" id="password" placeholder="Пароль"/>
+    <button onclick="doLogin()">Войти</button>
+  </div>
+
+  <div id="panel">
+    <button class="logout" onclick="logout()">Выйти</button>
+    <div id="list"></div>
+  </div>
+</div>
+
+<script>
+const sb = supabase.createClient('https://exmwkutxjyrwqzhxtjba.supabase.co', 'sb_publishable_1MB5-b5BJAlK_XdoMLkZMA_0W-gC4sy');
+
+sb.auth.onAuthStateChange((e, session) => {
+  if (session) { document.getElementById('login-box').style.display='none'; document.getElementById('panel').style.display='block'; loadRequests(); }
+  else { document.getElementById('login-box').style.display='block'; document.getElementById('panel').style.display='none'; }
+});
+
+async function doLogin() {
+  const email = document.getElementById('email').value.trim();
+  const password = document.getElementById('password').value;
+  const err = document.getElementById('login-err');
+  const { error } = await sb.auth.signInWithPassword({ email, password });
+  if (error) { err.textContent = 'Неверный email или пароль'; err.classList.add('show'); return; }
+  err.classList.remove('show');
+}
+
+async function logout() { await sb.auth.signOut(); }
+
+async function loadRequests() {
+  const { data, error } = await sb.from('requests').select('*').order('created_at', { ascending: false });
+  const list = document.getElementById('list');
+  if (error) { list.innerHTML = '<p style="color:#f87171">Ошибка загрузки. Проверьте права доступа (RLS) в Supabase для просмотра всех заявок администратором.</p>'; return; }
+  if (!data || data.length === 0) { list.innerHTML = '<div class="empty">Заявок пока нет</div>'; return; }
+  list.innerHTML = data.map(r => `
+    <div class="req-card">
+      <div>
+        <div class="req-device">${r.device}</div>
+        <div class="req-issue">${r.issue} · ${r.address||'адрес не указан'}</div>
+        <div class="req-date">${new Date(r.created_at).toLocaleString('ru-KZ')}</div>
+      </div>
+      <select onchange="updateStatus('${r.id}', this.value)">
+        <option value="received" ${r.status==='received'?'selected':''}>Принята</option>
+        <option value="assigned" ${r.status==='assigned'?'selected':''}>Мастер назначен</option>
+        <option value="inprogress" ${r.status==='inprogress'?'selected':''}>В работе</option>
+        <option value="done" ${r.status==='done'?'selected':''}>Готово</option>
+      </select>
+    </div>`).join('');
+}
+
+async function updateStatus(id, status) {
+  await sb.from('requests').update({ status }).eq('id', id);
+  loadRequests();
+}
+</script>
+</body>
+</html>
