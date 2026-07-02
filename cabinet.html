@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Тез-Тез Жөнде — Личный кабинет</title>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=Mulish:wght@300;400;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --white:#ffffff;--bg:#f5f7fa;--bg2:#eef1f6;
+  --red:#e53935;--red-dark:#c62828;--red-light:#ffebee;
+  --blue:#1565c0;--blue-light:#e3f2fd;
+  --text:#1a1a2e;--text2:#4a4a6a;--muted:#8888aa;
+  --border:#e0e4ef;--shadow:0 4px 24px rgba(0,0,0,.08);
+  --green:#2e7d32;--green-light:#e8f5e9;--orange:#e65100;
+  --font-head:'Unbounded',sans-serif;--font-body:'Mulish',sans-serif;
+  --radius:12px;--radius-sm:8px;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--font-body);min-height:100vh}
+
+/* TOP NAV */
+.topnav{background:#fff;border-bottom:1px solid var(--border);padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:64px;box-shadow:0 2px 8px rgba(0,0,0,.05);position:fixed;top:0;left:0;width:100%;z-index:99}
+.logo{font-family:var(--font-head);font-size:1rem;font-weight:900;text-decoration:none;color:var(--text)}
+.logo span{color:var(--red)}
+.nav-user{display:flex;align-items:center;gap:.8rem}
+.user-avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--red),var(--orange));display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.9rem;color:#fff}
+.user-name{font-size:.88rem;font-weight:600;color:var(--text)}
+.btn-logout{background:none;border:1px solid var(--border);border-radius:var(--radius-sm);padding:.4rem .9rem;font-size:.78rem;color:var(--text2);cursor:pointer;font-family:var(--font-body)}
+.btn-logout:hover{background:var(--red-light);color:var(--red);border-color:var(--red)}
+.back-link{font-size:.82rem;color:var(--text2);text-decoration:none;display:flex;align-items:center;gap:.4rem}
+.back-link:hover{color:var(--red)}
+
+/* LAYOUT */
+.layout{display:grid;grid-template-columns:260px 1fr;min-height:100vh;padding-top:64px}
+
+/* SIDEBAR */
+.sidebar{background:#fff;border-right:1px solid var(--border);padding:1.5rem 1rem;position:sticky;top:64px;height:calc(100vh - 64px);overflow-y:auto}
+.sidebar-profile{text-align:center;padding:1.2rem;background:var(--bg);border-radius:var(--radius);margin-bottom:1.5rem}
+.sidebar-avatar{width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,var(--red),var(--orange));display:flex;align-items:center;justify-content:center;font-size:1.4rem;font-weight:900;color:#fff;margin:0 auto .8rem}
+.sidebar-name{font-family:var(--font-head);font-size:.85rem;font-weight:700;color:var(--text);margin-bottom:.2rem}
+.sidebar-email{font-size:.72rem;color:var(--muted);word-break:break-all}
+.sidebar-stats{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin-top:1rem}
+.ss{background:#fff;border:1px solid var(--border);border-radius:var(--radius-sm);padding:.6rem;text-align:center}
+.ss-num{font-family:var(--font-head);font-size:1.3rem;font-weight:900;color:var(--red)}
+.ss-lbl{font-size:.65rem;color:var(--muted);margin-top:.2rem}
+.nav-menu{display:flex;flex-direction:column;gap:.3rem}
+.nav-item{display:flex;align-items:center;gap:.8rem;padding:.7rem .9rem;border-radius:var(--radius-sm);cursor:pointer;font-size:.88rem;font-weight:500;color:var(--text2);transition:all .2s;border:none;background:none;width:100%;text-align:left;text-decoration:none}
+.nav-item:hover{background:var(--bg);color:var(--text)}
+.nav-item.active{background:var(--red-light);color:var(--red);font-weight:600}
+.nav-item-icon{font-size:1.1rem;flex-shrink:0}
+.nav-badge{margin-left:auto;background:var(--red);color:#fff;font-size:.65rem;font-weight:700;padding:.15rem .45rem;border-radius:100px;font-family:var(--font-head)}
+
+/* MAIN */
+.main{padding:2rem;overflow-y:auto}
+.page-title{font-family:var(--font-head);font-size:1.4rem;font-weight:900;color:var(--text);margin-bottom:.4rem}
+.page-sub{font-size:.88rem;color:var(--muted);margin-bottom:1.8rem}
+
+/* PANELS */
+.panel{display:none}
+.panel.active{display:block}
+
+/* WELCOME CARDS */
+.welcome-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-bottom:2rem}
+.welcome-card{background:#fff;border:1.5px solid var(--border);border-radius:var(--radius);padding:1.3rem;display:flex;align-items:center;gap:1rem;cursor:pointer;transition:all .2s}
+.welcome-card:hover{border-color:var(--red);box-shadow:var(--shadow)}
+.wc-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0}
+.wc-icon.red{background:var(--red-light)}
+.wc-icon.blue{background:var(--blue-light)}
+.wc-icon.green{background:var(--green-light)}
+.wc-icon.orange{background:#fff3e0}
+.wc-num{font-family:var(--font-head);font-size:1.5rem;font-weight:900;color:var(--text)}
+.wc-lbl{font-size:.78rem;color:var(--muted);margin-top:.2rem}
+
+/* NEW REQUEST PANEL */
+.new-req-card{background:#fff;border:1.5px solid var(--border);border-radius:var(--radius);padding:2rem;box-shadow:var(--shadow)}
+.section-label{font-family:var(--font-head);font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;color:var(--red);margin-bottom:.6rem;font-weight:700}
+.form-group{margin-bottom:1rem}
+.form-group label{display:block;font-size:.75rem;font-weight:600;color:var(--text2);text-transform:uppercase;margin-bottom:.4rem;letter-spacing:.04em}
+.form-group input,.form-group select,.form-group textarea{width:100%;background:var(--bg);border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:.75rem 1rem;color:var(--text);font-family:var(--font-body);font-size:.9rem;outline:none;transition:border-color .2s;appearance:none;-webkit-appearance:none}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--red);background:#fff}
+.form-group textarea{resize:vertical;min-height:90px}
+.form-group select option{background:#fff;color:var(--text)}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}
+.btn{display:inline-block;padding:.75rem 1.8rem;border-radius:var(--radius-sm);font-family:var(--font-head);font-size:.75rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;cursor:pointer;transition:all .2s;border:none}
+.btn-primary{background:var(--red);color:#fff;box-shadow:0 4px 16px rgba(229,57,53,.25)}
+.btn-primary:hover{background:var(--red-dark)}
+.btn-full{width:100%;display:block;text-align:center;padding:.9rem}
+.alert{border-radius:var(--radius-sm);padding:.7rem 1rem;font-size:.82rem;margin-bottom:1rem;display:none}
+.alert.show{display:block}
+.alert-error{background:var(--red-light);color:var(--red);border:1px solid rgba(229,57,53,.2)}
+.alert-success{background:var(--green-light);color:var(--green);border:1px solid rgba(46,125,50,.2)}
+.loading-spinner{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:.4rem}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* REQUEST CARDS */
+.req-list{display:flex;flex-direction:column;gap:.9rem}
+.req-item{background:#fff;border:1.5px solid var(--border);border-radius:var(--radius);padding:1.3rem 1.5rem;transition:border-color .2s}
+.req-item:hover{border-color:var(--red)}
+.req-top{display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;margin-bottom:.7rem;flex-wrap:wrap}
+.req-device{font-family:var(--font-head);font-size:.92rem;font-weight:700;color:var(--text);margin-bottom:.2rem}
+.req-issue{font-size:.83rem;color:var(--text2)}
+.req-meta{display:flex;gap:1.2rem;flex-wrap:wrap;font-size:.76rem;color:var(--muted);margin-top:.5rem}
+.req-meta span{display:flex;align-items:center;gap:.3rem}
+
+/* STATUS TIMELINE mini */
+.mini-timeline{display:flex;align-items:center;gap:0;margin-top:1rem;overflow-x:auto;padding-bottom:.3rem}
+.mt-step{display:flex;align-items:center;gap:0;flex-shrink:0}
+.mt-dot{width:28px;height:28px;border-radius:50%;border:2px solid var(--border);background:#fff;display:flex;align-items:center;justify-content:center;font-size:.7rem;flex-shrink:0;transition:all .3s}
+.mt-dot.done{background:var(--green-light);border-color:var(--green);color:var(--green)}
+.mt-dot.active{background:var(--red-light);border-color:var(--red);animation:ringP 2s infinite}
+@keyframes ringP{0%,100%{box-shadow:0 0 0 4px rgba(229,57,53,.1)}50%{box-shadow:0 0 0 7px rgba(229,57,53,.05)}}
+.mt-line{width:32px;height:2px;background:var(--border);flex-shrink:0}
+.mt-line.done{background:var(--green)}
+.mt-label{font-size:.6rem;color:var(--muted);margin-top:.3rem;text-align:center;max-width:50px}
+.mt-step-wrap{display:flex;flex-direction:column;align-items:center;gap:.3rem}
+
+/* BADGES */
+.badge{display:inline-flex;align-items:center;gap:.4rem;padding:.3rem .7rem;border-radius:100px;font-family:var(--font-head);font-size:.58rem;font-weight:700;letter-spacing:.06em;white-space:nowrap}
+.badge-received{background:var(--blue-light);color:var(--blue)}
+.badge-assigned{background:#fff8e1;color:#e65100}
+.badge-inprogress{background:#fff3e0;color:#e65100}
+.badge-done{background:var(--green-light);color:var(--green)}
+.bdot{width:5px;height:5px;border-radius:50%;background:currentColor;animation:pulse 1.4s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+
+/* TRADEIN CARDS */
+.ti-item{background:#fff;border:1.5px solid var(--border);border-radius:var(--radius);padding:1.2rem 1.5rem}
+.ti-device{font-family:var(--font-head);font-size:.88rem;font-weight:700;color:var(--text)}
+.ti-estimate{font-size:.85rem;color:var(--green);font-weight:600;margin-top:.3rem}
+.ti-meta{font-size:.75rem;color:var(--muted);margin-top:.4rem}
+
+/* PROFILE */
+.profile-card{background:#fff;border:1.5px solid var(--border);border-radius:var(--radius);padding:2rem;box-shadow:var(--shadow)}
+.profile-avatar-big{width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,var(--red),var(--orange));display:flex;align-items:center;justify-content:center;font-size:2rem;font-weight:900;color:#fff;margin-bottom:1.2rem}
+
+/* EMPTY */
+.empty{text-align:center;padding:3rem;color:var(--muted)}
+.empty-icon{font-size:2.5rem;margin-bottom:.8rem}
+.empty h3{font-family:var(--font-head);font-size:.9rem;color:var(--text);margin-bottom:.4rem}
+.empty p{font-size:.82rem}
+.empty .btn{margin-top:1rem;display:inline-block}
+
+/* LOGIN */
+.login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:2rem;background:var(--bg)}
+.login-card{background:#fff;border:1.5px solid var(--border);border-radius:20px;padding:2.5rem 2rem;width:100%;max-width:400px;box-shadow:var(--shadow)}
+.login-logo{font-family:var(--font-head);font-size:1.2rem;font-weight:900;text-align:center;margin-bottom:.5rem}
+.login-logo span{color:var(--red)}
+.login-sub{text-align:center;font-size:.85rem;color:var(--muted);margin-bottom:2rem}
+.tabs{display:flex;border:1.5px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;margin-bottom:1.5rem}
+.tab-btn{flex:1;padding:.6rem;background:transparent;border:none;color:var(--text2);font-family:var(--font-head);font-size:.68rem;font-weight:700;letter-spacing:.06em;cursor:pointer;transition:all .2s}
+.tab-btn.active{background:var(--red);color:#fff}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.fadein{animation:fadeUp .35s ease both}
+
+@media(max-width:768px){
+  .layout{grid-template-columns:1fr}
+  .sidebar{display:none}
+  .topnav{padding:0 1rem}
+  .main{padding:1.2rem}
+  .form-row{grid-template-columns:1fr}
+  .welcome-grid{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- LOGIN PAGE -->
+<div id="login-page" class="login-wrap">
+  <div class="login-card fadein">
+    <div class="login-logo"><span>Тез-Тез</span> Жөнде</div>
+    <div class="login-sub">Войдите или создайте аккаунт</div>
+    <div class="tabs">
+      <button class="tab-btn active" id="tab-in" onclick="switchTab('in')">Войти</button>
+      <button class="tab-btn" id="tab-up" onclick="switchTab('up')">Регистрация</button>
+    </div>
+    <div class="alert alert-error" id="auth-err"></div>
+    <div class="alert alert-success" id="auth-ok"></div>
+
+    <div id="panel-in">
+      <div class="form-group"><label>Email</label><input type="email" id="l-email" placeholder="email@example.com"/></div>
+      <div class="form-group"><label>Пароль</label><input type="password" id="l-pass" placeholder="••••••••"/></div>
+      <button class="btn btn-primary btn-full" id="btn-login" onclick="doLogin()">Войти</button>
+    </div>
+
+    <div id="panel-up" style="display:none">
+      <div class="form-row">
+        <div class="form-group"><label>Имя</label><input type="text" id="r-name" placeholder="Азамат"/></div>
+        <div class="form-group"><label>Телефон</label><input type="tel" id="r-phone" placeholder="+7 700 ..."/></div>
+      </div>
+      <div class="form-group"><label>Email</label><input type="email" id="r-email" placeholder="email@example.com"/></div>
+      <div class="form-group"><label>Пароль (мин. 6 символов)</label><input type="password" id="r-pass" placeholder="••••••••"/></div>
+      <button class="btn btn-primary btn-full" id="btn-reg" onclick="doRegister()">Создать аккаунт</button>
+    </div>
+
+    <div style="text-align:center;margin-top:1.2rem">
+      <a href="index.html" style="font-size:.8rem;color:var(--muted);text-decoration:none">← Вернуться на сайт</a>
+    </div>
+  </div>
+</div>
+
+<!-- CABINET -->
+<div id="cabinet-page" style="display:none">
+
+  <!-- TOP NAV -->
+  <div class="topnav">
+    <a href="index.html" class="back-link">← <span class="logo"><span>Тез-Тез</span> Жөнде</span></a>
+    <div class="nav-user">
+      <div class="user-avatar" id="top-avatar">А</div>
+      <span class="user-name" id="top-name"></span>
+      <button class="btn-logout" onclick="doLogout()">Выйти</button>
+    </div>
+  </div>
+
+  <div class="layout">
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+      <div class="sidebar-profile">
+        <div class="sidebar-avatar" id="sb-avatar">А</div>
+        <div class="sidebar-name" id="sb-name">Пользователь</div>
+        <div class="sidebar-email" id="sb-email"></div>
+        <div class="sidebar-stats">
+          <div class="ss"><div class="ss-num" id="sb-total">0</div><div class="ss-lbl">заявок</div></div>
+          <div class="ss"><div class="ss-num" id="sb-done">0</div><div class="ss-lbl">готово</div></div>
+        </div>
+      </div>
+
+      <div class="nav-menu">
+        <button class="nav-item active" onclick="showPanel('overview')"><span class="nav-item-icon">🏠</span>Обзор</button>
+        <button class="nav-item" onclick="showPanel('repair')"><span class="nav-item-icon">🔧</span>Мои заявки<span class="nav-badge" id="nb-repair">0</span></button>
+        <button class="nav-item" onclick="showPanel('new')"><span class="nav-item-icon">➕</span>Новая заявка</button>
+        <button class="nav-item" onclick="showPanel('tradein')"><span class="nav-item-icon">📱</span>Сдать телефон</button>
+        <button class="nav-item" onclick="showPanel('mytradein')"><span class="nav-item-icon">💰</span>Мои сдачи</button>
+        <button class="nav-item" onclick="showPanel('track')"><span class="nav-item-icon">📍</span>Трекер заявки</button>
+        <button class="nav-item" onclick="showPanel('profile')"><span class="nav-item-icon">👤</span>Профиль</button>
+      </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="main">
+
+      <!-- OVERVIEW -->
+      <div class="panel active" id="panel-overview">
+        <div class="page-title" id="welcome-title">Добро пожаловать!</div>
+        <div class="page-sub">Всё о ваших заявках в одном месте</div>
+
+        <div class="welcome-grid">
+          <div class="welcome-card" onclick="showPanel('repair')">
+            <div class="wc-icon red">🔧</div>
+            <div><div class="wc-num" id="ov-repair">0</div><div class="wc-lbl">Заявок на ремонт</div></div>
+          </div>
+          <div class="welcome-card" onclick="showPanel('new')">
+            <div class="wc-icon blue">➕</div>
+            <div><div class="wc-num" style="font-size:1.2rem">Новая</div><div class="wc-lbl">Вызвать мастера</div></div>
+          </div>
+          <div class="welcome-card" onclick="showPanel('mytradein')">
+            <div class="wc-icon green">💰</div>
+            <div><div class="wc-num" id="ov-ti">0</div><div class="wc-lbl">Сдача телефонов</div></div>
+          </div>
+          <div class="welcome-card" onclick="showPanel('track')">
+            <div class="wc-icon orange">📍</div>
+            <div><div class="wc-num" style="font-size:1.2rem">Статус</div><div class="wc-lbl">Отследить заявку</div></div>
+          </div>
+        </div>
+
+        <!-- Recent requests -->
+        <div class="section-label">Последние заявки</div>
+        <div id="ov-recent"></div>
+      </div>
+
+      <!-- MY REPAIR REQUESTS -->
+      <div class="panel" id="panel-repair">
+        <div class="page-title">Мои заявки на ремонт</div>
+        <div class="page-sub">История всех обращений</div>
+        <div class="req-list" id="repair-list"></div>
+      </div>
+
+      <!-- NEW REQUEST -->
+      <div class="panel" id="panel-new">
+        <div class="page-title">Новая заявка</div>
+        <div class="page-sub">Мастер приедет в течение 30–60 минут</div>
+        <div class="new-req-card">
+          <div class="form-group">
+            <label>Марка и модель телефона</label>
+            <select id="nr-device">
+              <option value="">— Выберите —</option>
+              <optgroup label="Apple iPhone">
+                <option>iPhone 16 Pro Max / Pro</option><option>iPhone 16 / Plus</option>
+                <option>iPhone 15 Pro Max / Pro</option><option>iPhone 15 / Plus</option>
+                <option>iPhone 14 Pro Max / Pro</option><option>iPhone 14 / Plus</option>
+                <option>iPhone 13 Pro Max / Pro</option><option>iPhone 13 / mini</option>
+                <option>iPhone 12 Pro Max / Pro</option><option>iPhone 12 / mini</option>
+                <option>iPhone 11 Pro Max / Pro</option><option>iPhone 11</option>
+                <option>iPhone XS Max / XS / XR</option><option>iPhone X</option>
+                <option>iPhone 8 Plus / 8</option><option>iPhone 7 Plus / 7</option>
+                <option>iPhone 6s Plus / 6s / 6</option>
+              </optgroup>
+              <optgroup label="Samsung">
+                <option>Samsung Galaxy S24 Ultra / S24+</option>
+                <option>Samsung Galaxy S23 / S22</option>
+                <option>Samsung Galaxy A55 / A54</option>
+                <option>Samsung Galaxy A35 / A15</option>
+                <option>Samsung Galaxy другая модель</option>
+              </optgroup>
+              <optgroup label="Другие">
+                <option>Xiaomi 14 / 13</option><option>Xiaomi Redmi Note</option>
+                <option>Huawei P / Mate серия</option>
+                <option>OPPO / Realme</option><option>OnePlus</option>
+                <option>Другой телефон</option>
+              </optgroup>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Тип неисправности</label>
+            <select id="nr-issue">
+              <option value="">— Выберите —</option>
+              <option>Разбит экран / стекло</option>
+              <option>Телефон не заряжается</option>
+              <option>Быстро садится батарея</option>
+              <option>Попал в воду</option>
+              <option>Проблемы с камерой</option>
+              <option>Нет звука / микрофона</option>
+              <option>Кнопки не работают</option>
+              <option>Face ID / Touch ID сломан</option>
+              <option>Телефон не включается</option>
+              <option>Другая проблема</option>
+            </select>
+          </div>
+          <div class="form-group"><label>Адрес выезда</label><input type="text" id="nr-address" placeholder="ул. Сыганак 10, кв. 5 / офис / кафе"/></div>
+          <div class="form-group"><label>Удобное время</label><input type="text" id="nr-time" placeholder="Сегодня после 15:00 / завтра с утра..."/></div>
+          <div class="form-group"><label>Комментарий (необязательно)</label><textarea id="nr-comment" placeholder="Опишите подробнее..."></textarea></div>
+          <div class="alert alert-error" id="nr-err"></div>
+          <div class="alert alert-success" id="nr-ok"></div>
+          <button class="btn btn-primary btn-full" id="btn-nr" onclick="submitRepair()">Вызвать мастера →</button>
+        </div>
+      </div>
+
+      <!-- TRADE-IN FORM -->
+      <div class="panel" id="panel-tradein">
+        <div class="page-title">Сдать телефон</div>
+        <div class="page-sub">Узнайте стоимость и оставьте заявку</div>
+        <div class="new-req-card">
+          <div class="form-group">
+            <label>Марка и модель</label>
+            <select id="ti-device" onchange="calcEstimate()">
+              <option value="">— Выберите —</option>
+              <optgroup label="Apple iPhone">
+                <option data-min="180000" data-max="280000">iPhone 15 Pro Max / Pro</option>
+                <option data-min="120000" data-max="190000">iPhone 15 / 14 Pro</option>
+                <option data-min="80000" data-max="130000">iPhone 14 / 13 Pro</option>
+                <option data-min="50000" data-max="85000">iPhone 13 / 12 Pro</option>
+                <option data-min="30000" data-max="55000">iPhone 12 / 11</option>
+                <option data-min="18000" data-max="32000">iPhone X / XS / XR</option>
+                <option data-min="8000" data-max="18000">iPhone 7 / 8</option>
+              </optgroup>
+              <optgroup label="Samsung">
+                <option data-min="100000" data-max="180000">Galaxy S24 / S23 Ultra</option>
+                <option data-min="55000" data-max="100000">Galaxy S23 / S22</option>
+                <option data-min="25000" data-max="50000">Galaxy A54 / A55</option>
+                <option data-min="10000" data-max="25000">Galaxy A-серия</option>
+              </optgroup>
+              <optgroup label="Другие">
+                <option data-min="20000" data-max="60000">Xiaomi флагман</option>
+                <option data-min="8000" data-max="22000">Xiaomi Redmi</option>
+                <option data-min="5000" data-max="15000">Другой / не знаю</option>
+              </optgroup>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Состояние</label>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:.6rem">
+              <div class="cond-btn" data-mult="1" onclick="selectCond(this)">😊 Отличное</div>
+              <div class="cond-btn" data-mult="0.8" onclick="selectCond(this)">🙂 Хорошее</div>
+              <div class="cond-btn" data-mult="0.5" onclick="selectCond(this)">😐 Есть царапины</div>
+              <div class="cond-btn" data-mult="0.25" onclick="selectCond(this)">😟 Разбит / не вкл.</div>
+            </div>
+          </div>
+          <div id="ti-est-box" style="background:var(--green-light);border:1.5px solid rgba(46,125,50,.2);border-radius:var(--radius-sm);padding:1rem;margin-bottom:1rem;display:none">
+            <div style="font-size:.72rem;color:var(--green);font-weight:600;margin-bottom:.3rem">Примерная оценка</div>
+            <div id="ti-est-val" style="font-family:var(--font-head);font-size:1.4rem;font-weight:900;color:var(--green)">—</div>
+          </div>
+          <div class="form-group"><label>Ваш телефон для связи</label><input type="tel" id="ti-phone" placeholder="+7 707 295-08-65"/></div>
+          <div class="form-group"><label>Адрес или где удобно передать</label><input type="text" id="ti-address" placeholder="Адрес / Kaspi Mall / удобное место"/></div>
+          <div class="form-group"><label>Комментарий</label><textarea id="ti-comment" placeholder="Объём памяти, год покупки, дефекты..."></textarea></div>
+          <div class="alert alert-error" id="ti-err"></div>
+          <div class="alert alert-success" id="ti-ok"></div>
+          <button class="btn btn-primary btn-full" id="btn-ti" onclick="submitTradein()">Оставить заявку на сдачу →</button>
+        </div>
+      </div>
+
+      <!-- MY TRADEIN -->
+      <div class="panel" id="panel-mytradein">
+        <div class="page-title">Мои сдачи телефонов</div>
+        <div class="page-sub">Заявки на скупку</div>
+        <div class="req-list" id="ti-list"></div>
+      </div>
+
+      <!-- TRACKER -->
+      <div class="panel" id="panel-track">
+        <div class="page-title">Трекер статуса</div>
+        <div class="page-sub">Введите номер заявки или выберите из своих</div>
+        <div style="display:flex;gap:.8rem;margin-bottom:1.5rem;flex-wrap:wrap">
+          <input type="text" id="track-inp" placeholder="МФ-2025-XXXX" style="flex:1;min-width:200px;background:#fff;border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:.8rem 1rem;color:var(--text);font-family:var(--font-body);font-size:.9rem;outline:none" onfocus="this.style.borderColor='var(--red)'" onblur="this.style.borderColor='var(--border)'" onkeydown="if(event.key==='Enter')trackOrder()"/>
+          <button class="btn btn-primary" onclick="trackOrder()">Найти →</button>
+        </div>
+        <div id="track-result"></div>
+      </div>
+
+      <!-- PROFILE -->
+      <div class="panel" id="panel-profile">
+        <div class="page-title">Мой профиль</div>
+        <div class="page-sub">Ваши данные и настройки</div>
+        <div class="profile-card">
+          <div class="profile-avatar-big" id="pr-avatar">А</div>
+          <div style="font-family:var(--font-head);font-size:1.1rem;font-weight:700;margin-bottom:.3rem" id="pr-name">—</div>
+          <div style="font-size:.85rem;color:var(--muted);margin-bottom:2rem" id="pr-email">—</div>
+          <div style="border-top:1px solid var(--border);padding-top:1.5rem">
+            <div class="section-label">Данные аккаунта</div>
+            <div class="form-group"><label>Имя</label><input type="text" id="pr-inp-name" placeholder="Ваше имя"/></div>
+            <div class="form-group"><label>Email</label><input type="email" id="pr-inp-email" placeholder="email@example.com" readonly style="opacity:.6"/></div>
+            <div class="alert alert-success" id="pr-ok"></div>
+            <button class="btn btn-primary" onclick="saveProfile()">Сохранить</button>
+          </div>
+          <div style="border-top:1px solid var(--border);padding-top:1.5rem;margin-top:1.5rem">
+            <div class="section-label">Статистика</div>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem">
+              <div class="ss"><div class="ss-num" id="pr-total">0</div><div class="ss-lbl">заявок на ремонт</div></div>
+              <div class="ss"><div class="ss-num" id="pr-done">0</div><div class="ss-lbl">выполнено</div></div>
+              <div class="ss"><div class="ss-num" id="pr-ti">0</div><div class="ss-lbl">сдача телефонов</div></div>
+            </div>
+          </div>
+          <div style="border-top:1px solid var(--border);padding-top:1.5rem;margin-top:1.5rem">
+            <button onclick="doLogout()" style="background:var(--red-light);color:var(--red);border:1px solid rgba(229,57,53,.2);border-radius:var(--radius-sm);padding:.6rem 1.2rem;font-size:.82rem;cursor:pointer;font-family:var(--font-body)">🚪 Выйти из аккаунта</button>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- end main -->
+  </div><!-- end layout -->
+</div><!-- end cabinet -->
+
+<style>
+.cond-btn{padding:.7rem;border-radius:var(--radius-sm);border:1.5px solid var(--border);background:#fff;color:var(--text2);font-size:.82rem;cursor:pointer;text-align:center;transition:all .2s;font-weight:500}
+.cond-btn.active{background:var(--red-light);border-color:var(--red);color:var(--red)}
+</style>
+
+<script>
+const sb = supabase.createClient('https://exmwkutxjyrwqzhxtjba.supabase.co','sb_publishable_1MB5-b5BJAlK_XdoMLkZMA_0W-gC4sy');
+let currentUser = null;
+let repairRequests = [];
+let tradeinRequests = [];
+let tiMult = null;
+
+// ─── AUTH STATE ───
+sb.auth.onAuthStateChange((e, session) => {
+  currentUser = session?.user || null;
+  if (currentUser) {
+    document.getElementById('login-page').style.display = 'none';
+    document.getElementById('cabinet-page').style.display = 'block';
+    initCabinet();
+  } else {
+    document.getElementById('login-page').style.display = 'flex';
+    document.getElementById('cabinet-page').style.display = 'none';
+  }
+});
+
+// ─── LOGIN TABS ───
+function switchTab(t) {
+  document.getElementById('panel-in').style.display = t==='in'?'block':'none';
+  document.getElementById('panel-up').style.display = t==='up'?'block':'none';
+  document.getElementById('tab-in').classList.toggle('active', t==='in');
+  document.getElementById('tab-up').classList.toggle('active', t==='up');
+  document.getElementById('auth-err').classList.remove('show');
+  document.getElementById('auth-ok').classList.remove('show');
+}
+
+async function doLogin() {
+  const email = document.getElementById('l-email').value.trim();
+  const pass  = document.getElementById('l-pass').value;
+  const err   = document.getElementById('auth-err');
+  if (!email || !pass) { showErr(err,'Заполните все поля'); return; }
+  const btn = document.getElementById('btn-login');
+  btn.innerHTML = '<span class="loading-spinner"></span>Входим...'; btn.disabled = true;
+  const { error } = await sb.auth.signInWithPassword({ email, password: pass });
+  btn.innerHTML = 'Войти'; btn.disabled = false;
+  if (error) showErr(err, 'Неверный email или пароль');
+}
+
+async function doRegister() {
+  const name  = document.getElementById('r-name').value.trim();
+  const phone = document.getElementById('r-phone').value.trim();
+  const email = document.getElementById('r-email').value.trim();
+  const pass  = document.getElementById('r-pass').value;
+  const err   = document.getElementById('auth-err');
+  const ok    = document.getElementById('auth-ok');
+  if (!name||!email||!pass) { showErr(err,'Заполните обязательные поля'); return; }
+  if (pass.length < 6) { showErr(err,'Пароль минимум 6 символов'); return; }
+  const btn = document.getElementById('btn-reg');
+  btn.innerHTML = '<span class="loading-spinner"></span>Создаём...'; btn.disabled = true;
+  const { error } = await sb.auth.signUp({ email, password: pass, options: { data: { name, phone } } });
+  btn.innerHTML = 'Создать аккаунт'; btn.disabled = false;
+  if (error) { showErr(err, error.message); return; }
+  ok.textContent = '✅ Аккаунт создан! Проверьте email для подтверждения.';
+  ok.classList.add('show');
+}
+
+async function doLogout() { await sb.auth.signOut(); }
+
+// ─── CABINET INIT ───
+async function initCabinet() {
+  const email = currentUser.email || '';
+  const name  = currentUser.user_metadata?.name || email.split('@')[0];
+
+  // Set names
+  ['top-avatar','sb-avatar','pr-avatar'].forEach(id => document.getElementById(id).textContent = name[0].toUpperCase());
+  document.getElementById('top-name').textContent = name;
+  document.getElementById('sb-name').textContent  = name;
+  document.getElementById('sb-email').textContent = email;
+  document.getElementById('welcome-title').textContent = 'Привет, ' + name + '!';
+  document.getElementById('pr-name').textContent  = name;
+  document.getElementById('pr-email').textContent = email;
+  document.getElementById('pr-avatar').textContent = name[0].toUpperCase();
+  document.getElementById('pr-inp-name').value  = name;
+  document.getElementById('pr-inp-email').value = email;
+
+  await Promise.all([loadRepair(), loadTradein()]);
+}
+
+async function loadRepair() {
+  const { data } = await sb.from('requests').select('*').eq('user_id', currentUser.id).order('created_at', { ascending: false });
+  repairRequests = data || [];
+  const total = repairRequests.length;
+  const done  = repairRequests.filter(r => r.status === 'done').length;
+  ['sb-total','pr-total','ov-repair'].forEach(id => document.getElementById(id).textContent = total);
+  ['sb-done','pr-done'].forEach(id => document.getElementById(id).textContent = done);
+  document.getElementById('nb-repair').textContent = total;
+  renderRepair();
+  renderOverview();
+}
+
+async function loadTradein() {
+  const { data } = await sb.from('tradein_requests').select('*').eq('user_id', currentUser.id).order('created_at', { ascending: false });
+  tradeinRequests = data || [];
+  document.getElementById('ov-ti').textContent  = tradeinRequests.length;
+  document.getElementById('pr-ti').textContent  = tradeinRequests.length;
+  renderTradein();
+}
+
+// ─── RENDER ───
+const STATUS_META = {
+  received:   {label:'Принята',       cls:'badge-received',   dot:true,  icon:'📋'},
+  assigned:   {label:'Назначен мастер',cls:'badge-assigned',  dot:true,  icon:'👨‍🔧'},
+  inprogress: {label:'В работе',      cls:'badge-inprogress', dot:true,  icon:'🔧'},
+  done:       {label:'Готово',        cls:'badge-done',       dot:false, icon:'✅'},
+};
+const STEPS = ['received','assigned','inprogress','done'];
+const STEP_LABELS = ['Принята','Едет','В работе','Готово'];
+const STEP_ICONS  = ['📋','🚗','🔧','✅'];
+
+function renderRepair() {
+  const el = document.getElementById('repair-list');
+  if (!repairRequests.length) {
+    el.innerHTML = `<div class="empty"><div class="empty-icon">🔧</div><h3>Заявок пока нет</h3><p>Создайте первую заявку на ремонт</p><button class="btn btn-primary" onclick="showPanel('new')">Вызвать мастера →</button></div>`;
+    return;
+  }
+  el.innerHTML = repairRequests.map(r => renderReqCard(r)).join('');
+}
+
+function renderOverview() {
+  const el = document.getElementById('ov-recent');
+  const recent = repairRequests.slice(0,3);
+  if (!recent.length) { el.innerHTML = `<div class="empty" style="padding:1.5rem"><div class="empty-icon">📋</div><p>Нет заявок</p><button class="btn btn-primary" onclick="showPanel('new')">Создать первую →</button></div>`; return; }
+  el.innerHTML = recent.map(r => renderReqCard(r)).join('');
+}
+
+function renderReqCard(r) {
+  const meta = STATUS_META[r.status] || STATUS_META.received;
+  const date = new Date(r.created_at).toLocaleString('ru-KZ', {day:'numeric',month:'long',hour:'2-digit',minute:'2-digit'});
+  const curStep = STEPS.indexOf(r.status);
+
+  const timeline = STEPS.map((s, i) => {
+    const isDone   = i < curStep;
+    const isActive = i === curStep;
+    const cls = isDone ? 'done' : isActive ? 'active' : '';
+    const lineCls = i < curStep ? 'done' : '';
+    return `<div class="mt-step">
+      <div class="mt-step-wrap">
+        <div class="mt-dot ${cls}">${isDone ? '✓' : STEP_ICONS[i]}</div>
+        <div class="mt-label">${STEP_LABELS[i]}</div>
+      </div>
+      ${i < STEPS.length - 1 ? `<div class="mt-line ${lineCls}"></div>` : ''}
+    </div>`;
+  }).join('');
+
+  return `<div class="req-item fadein">
+    <div class="req-top">
+      <div>
+        <div class="req-device">${r.device}</div>
+        <div class="req-issue">${r.issue}</div>
+      </div>
+      <div class="badge ${meta.cls}">${meta.dot ? '<div class="bdot"></div>' : ''}${meta.label}</div>
+    </div>
+    <div class="req-meta">
+      <span>📍 ${r.address || 'адрес не указан'}</span>
+      <span>🕐 ${date}</span>
+      <span>💰 ${r.price || 'уточняется'}</span>
+    </div>
+    <div class="mini-timeline">${timeline}</div>
+  </div>`;
+}
+
+function renderTradein() {
+  const el = document.getElementById('ti-list');
+  if (!tradeinRequests.length) {
+    el.innerHTML = `<div class="empty"><div class="empty-icon">📱</div><h3>Нет заявок на сдачу</h3><p>Сдайте старый телефон и получите деньги сразу</p><button class="btn btn-primary" onclick="showPanel('tradein')">Оставить заявку →</button></div>`;
+    return;
+  }
+  el.innerHTML = tradeinRequests.map(r => {
+    const date = new Date(r.created_at).toLocaleString('ru-KZ',{day:'numeric',month:'long',hour:'2-digit',minute:'2-digit'});
+    return `<div class="req-item fadein">
+      <div class="ti-device">${r.device || r.name}</div>
+      ${r.estimate ? `<div class="ti-estimate">Оценка: ${r.estimate}</div>` : ''}
+      <div class="ti-meta">📅 ${date}${r.address ? ' · 📍 ' + r.address : ''}</div>
+    </div>`;
+  }).join('');
+}
+
+// ─── PANEL SWITCH ───
+function showPanel(name) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
+  document.getElementById('panel-' + name).classList.add('active');
+  const navMap = {overview:0,repair:1,new:2,tradein:3,mytradein:4,track:5,profile:6};
+  const items = document.querySelectorAll('.nav-item');
+  if (navMap[name] !== undefined && items[navMap[name]]) items[navMap[name]].classList.add('active');
+}
+
+// ─── SUBMIT REPAIR ───
+async function submitRepair() {
+  const device  = document.getElementById('nr-device').value;
+  const issue   = document.getElementById('nr-issue').value;
+  const address = document.getElementById('nr-address').value.trim();
+  const comment = document.getElementById('nr-comment').value.trim();
+  const err = document.getElementById('nr-err');
+  const ok  = document.getElementById('nr-ok');
+  err.classList.remove('show'); ok.classList.remove('show');
+  if (!device || !issue) { showErr(err,'Выберите устройство и тип поломки'); return; }
+  const btn = document.getElementById('btn-nr');
+  btn.innerHTML = '<span class="loading-spinner"></span>Отправляем...'; btn.disabled = true;
+  const { error } = await sb.from('requests').insert({ user_id: currentUser.id, device, issue, address, comment, status:'received' });
+  btn.innerHTML = 'Вызвать мастера →'; btn.disabled = false;
+  if (error) { showErr(err, 'Ошибка: ' + error.message); return; }
+  ok.textContent = '✅ Заявка отправлена! Мастер свяжется с вами в ближайшее время.';
+  ok.classList.add('show');
+  document.getElementById('nr-device').value = '';
+  document.getElementById('nr-issue').value  = '';
+  document.getElementById('nr-address').value = '';
+  document.getElementById('nr-comment').value = '';
+  setTimeout(() => { loadRepair(); showPanel('repair'); }, 1500);
+}
+
+// ─── TRADE-IN ───
+function selectCond(el) {
+  document.querySelectorAll('.cond-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  tiMult = parseFloat(el.dataset.mult);
+  calcEstimate();
+}
+
+function calcEstimate() {
+  const sel = document.getElementById('ti-device');
+  const opt = sel.options[sel.selectedIndex];
+  const box = document.getElementById('ti-est-box');
+  const val = document.getElementById('ti-est-val');
+  if (!opt || !opt.dataset.min || tiMult === null) { box.style.display='none'; return; }
+  const min = Math.round(parseInt(opt.dataset.min) * tiMult / 1000) * 1000;
+  const max = Math.round(parseInt(opt.dataset.max) * tiMult / 1000) * 1000;
+  val.textContent = min.toLocaleString('ru-KZ') + ' – ' + max.toLocaleString('ru-KZ') + ' ₸';
+  box.style.display = 'block';
+}
+
+async function submitTradein() {
+  const device  = document.getElementById('ti-device').value;
+  const phone   = document.getElementById('ti-phone').value.trim();
+  const address = document.getElementById('ti-address').value.trim();
+  const comment = document.getElementById('ti-comment').value.trim();
+  const err = document.getElementById('ti-err');
+  const ok  = document.getElementById('ti-ok');
+  err.classList.remove('show'); ok.classList.remove('show');
+  if (!device || !phone || tiMult === null) { showErr(err,'Выберите модель, состояние и укажите телефон'); return; }
+  const sel = document.getElementById('ti-device');
+  const opt = sel.options[sel.selectedIndex];
+  const min = Math.round(parseInt(opt.dataset.min) * tiMult / 1000) * 1000;
+  const max = Math.round(parseInt(opt.dataset.max) * tiMult / 1000) * 1000;
+  const estimate = min.toLocaleString('ru-KZ') + ' – ' + max.toLocaleString('ru-KZ') + ' ₸';
+  const btn = document.getElementById('btn-ti');
+  btn.innerHTML = '<span class="loading-spinner"></span>Отправляем...'; btn.disabled = true;
+  const { error } = await sb.from('tradein_requests').insert({ user_id: currentUser.id, device, name: '', phone, address, comment, estimate });
+  btn.innerHTML = 'Оставить заявку на сдачу →'; btn.disabled = false;
+  if (error) { showErr(err, 'Ошибка: ' + error.message); return; }
+  ok.textContent = '✅ Заявка отправлена! Перезвоним для согласования.';
+  ok.classList.add('show');
+  setTimeout(() => { loadTradein(); showPanel('mytradein'); }, 1500);
+}
+
+// ─── TRACKER ───
+function trackOrder() {
+  const id = document.getElementById('track-inp').value.trim().toUpperCase();
+  const el = document.getElementById('track-result');
+  if (!id) { el.innerHTML = '<p style="color:var(--muted);font-size:.85rem">Введите номер заявки</p>'; return; }
+
+  // Check in own requests first
+  const own = repairRequests.find(r => r.id.startsWith(id) || id.startsWith('МФ'));
+  if (own) {
+    const meta = STATUS_META[own.status] || STATUS_META.received;
+    const date = new Date(own.created_at).toLocaleString('ru-KZ',{day:'numeric',month:'long',hour:'2-digit',minute:'2-digit'});
+    el.innerHTML = `<div class="req-item fadein">
+      <div class="req-top">
+        <div><div class="req-device">${own.device}</div><div class="req-issue">${own.issue}</div></div>
+        <div class="badge ${meta.cls}">${meta.dot?'<div class="bdot"></div>':''}${meta.label}</div>
+      </div>
+      <div class="req-meta"><span>📍 ${own.address||'—'}</span><span>🕐 ${date}</span><span>💰 ${own.price||'уточняется'}</span></div>
+      ${renderReqCard(own).match(/<div class="mini-timeline">(.*?)<\/div>/s)?.[0]||''}
+    </div>`;
+  } else {
+    el.innerHTML = `<div class="empty"><div class="empty-icon">🔍</div><h3>Заявка не найдена</h3><p>Проверьте номер или позвоните нам: <a href="tel:+77072950865" style="color:var(--red)">+7 707 295-08-65</a></p></div>`;
+  }
+}
+
+// ─── PROFILE ───
+async function saveProfile() {
+  const name = document.getElementById('pr-inp-name').value.trim();
+  if (!name) return;
+  const ok = document.getElementById('pr-ok');
+  await sb.auth.updateUser({ data: { name } });
+  ok.textContent = '✅ Профиль сохранён';
+  ok.classList.add('show');
+  setTimeout(() => ok.classList.remove('show'), 3000);
+}
+
+// ─── HELPERS ───
+function showErr(el, msg) { el.textContent = msg; el.classList.add('show'); }
+</script>
+</body>
+</html>

@@ -355,7 +355,7 @@ footer{background:var(--bg2);color:var(--text);padding:3rem 5vw 2rem;border-top:
     <li><a href="#how">Как работает</a></li>
     <li><a href="#reviews">Отзывы</a></li>
     <li><a href="#tracker">Статус</a></li>
-    <li><a href="#cabinet">Кабинет</a></li>
+    <li><a href="cabinet.html" style="color:var(--red);font-weight:600">Кабинет</a></li>
     <li><a href="#tradein">Сдать телефон</a></li>
     <li><a href="#contact">Контакты</a></li>
     <li><a href="master.html" style="color:var(--accent)">Мастерам 🔧</a></li>
@@ -372,7 +372,7 @@ footer{background:var(--bg2);color:var(--text);padding:3rem 5vw 2rem;border-top:
         <span style="color:var(--muted);font-size:.8rem">▾</span>
       </div>
       <div id="user-menu" style="display:none;position:absolute;top:4.5rem;right:5vw;background:#fff;border:1px solid var(--border);border-radius:12px;padding:.8rem;min-width:180px;z-index:100">
-        <button onclick="goToCabinet()" style="display:block;width:100%;text-align:left;background:none;border:none;color:var(--text);font-family:var(--font-body);font-size:.88rem;padding:.6rem .8rem;border-radius:8px;cursor:pointer">👤 Личный кабинет</button>
+        <button onclick="window.location.href="cabinet.html"" style="display:block;width:100%;text-align:left;background:none;border:none;color:var(--text);font-family:var(--font-body);font-size:.88rem;padding:.6rem .8rem;border-radius:8px;cursor:pointer">👤 Личный кабинет</button>
         <button onclick="signOut()" style="display:block;width:100%;text-align:left;background:none;border:none;color:var(--red);font-family:var(--font-body);font-size:.88rem;padding:.6rem .8rem;border-radius:8px;cursor:pointer">🚪 Выйти</button>
       </div>
     </div>
@@ -904,7 +904,7 @@ document.addEventListener('click', e => {
     document.getElementById('user-menu').style.display = 'none';
 });
 
-function goToCabinet() {
+function window.location.href="cabinet.html" {
   document.getElementById('user-menu').style.display = 'none';
   document.getElementById('cabinet').scrollIntoView({ behavior: 'smooth' });
 }
