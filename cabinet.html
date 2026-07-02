@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Тез-Тез Жөнде — Личный кабинет</title>
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=Mulish:wght@300;400;600&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -448,7 +448,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font-body);min-hei
 </style>
 
 <script>
-const sb = supabase.createClient('https://exmwkutxjyrwqzhxtjba.supabase.co','sb_publishable_1MB5-b5BJAlK_XdoMLkZMA_0W-gC4sy');
+const sb = supabase.createClient('https://exmwkutxjyrwqzhxtjba.supabase.co','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV4bXdrdXR4anlyd3F6aHh0amJhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAyODM0OTMsImV4cCI6MjA5NTg1OTQ5M30.t0HWpU4Zyqq4PamrvKxp9ultAlvXKp33pub0hWBwlBA');
 let currentUser = null;
 let repairRequests = [];
 let tradeinRequests = [];
@@ -481,12 +481,22 @@ async function doLogin() {
   const email = document.getElementById('l-email').value.trim();
   const pass  = document.getElementById('l-pass').value;
   const err   = document.getElementById('auth-err');
-  if (!email || !pass) { showErr(err,'Заполните все поля'); return; }
+  const ok    = document.getElementById('auth-ok');
+  err.classList.remove('show'); ok.classList.remove('show');
+  if (!email || !pass) { showErr(err,'Введите email и пароль'); return; }
   const btn = document.getElementById('btn-login');
   btn.innerHTML = '<span class="loading-spinner"></span>Входим...'; btn.disabled = true;
-  const { error } = await sb.auth.signInWithPassword({ email, password: pass });
+  const { data, error } = await sb.auth.signInWithPassword({ email, password: pass });
   btn.innerHTML = 'Войти'; btn.disabled = false;
-  if (error) showErr(err, 'Неверный email или пароль');
+  if (error) {
+    if (error.message.includes('Email not confirmed')) {
+      showErr(err, '⚠️ Email не подтверждён. Обратитесь к администратору или проверьте почту.');
+    } else if (error.message.includes('Invalid login')) {
+      showErr(err, 'Неверный email или пароль');
+    } else {
+      showErr(err, 'Ошибка входа: ' + error.message);
+    }
+  }
 }
 
 async function doRegister() {
@@ -496,15 +506,42 @@ async function doRegister() {
   const pass  = document.getElementById('r-pass').value;
   const err   = document.getElementById('auth-err');
   const ok    = document.getElementById('auth-ok');
-  if (!name||!email||!pass) { showErr(err,'Заполните обязательные поля'); return; }
+  err.classList.remove('show'); ok.classList.remove('show');
+  if (!name || !email || !pass) { showErr(err,'Заполните имя, email и пароль'); return; }
   if (pass.length < 6) { showErr(err,'Пароль минимум 6 символов'); return; }
   const btn = document.getElementById('btn-reg');
   btn.innerHTML = '<span class="loading-spinner"></span>Создаём...'; btn.disabled = true;
-  const { error } = await sb.auth.signUp({ email, password: pass, options: { data: { name, phone } } });
+  const { data, error } = await sb.auth.signUp({
+    email,
+    password: pass,
+    options: { data: { name, phone } }
+  });
   btn.innerHTML = 'Создать аккаунт'; btn.disabled = false;
-  if (error) { showErr(err, error.message); return; }
-  ok.textContent = '✅ Аккаунт создан! Проверьте email для подтверждения.';
-  ok.classList.add('show');
+  if (error) {
+    if (error.message.includes('already registered')) {
+      showErr(err,'Этот email уже зарегистрирован. Попробуйте войти.');
+    } else {
+      showErr(err, 'Ошибка: ' + error.message);
+    }
+    return;
+  }
+  // Auto-confirm if session returned immediately
+  if (data.session) {
+    ok.textContent = '✅ Аккаунт создан! Входим...';
+    ok.classList.add('show');
+  } else {
+    ok.textContent = '✅ Аккаунт создан! Если не удаётся войти сразу — напишите администратору.';
+    ok.classList.add('show');
+    // Try to sign in immediately
+    setTimeout(async () => {
+      const { error: loginErr } = await sb.auth.signInWithPassword({ email, password: pass });
+      if (loginErr) {
+        ok.textContent = '✅ Аккаунт создан! Теперь войдите используя email и пароль.';
+        switchTab('in');
+        document.getElementById('l-email').value = email;
+      }
+    }, 1000);
+  }
 }
 
 async function doLogout() { await sb.auth.signOut(); }

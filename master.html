@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>МобиФикс — Кабинет мастера</title>
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=Mulish:wght@300;400;600&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{--black:#0e0e10;--accent:#ff3d3d;--accent2:#ff7a00;--white:#f8f5f0;--gray:#1c1c20;--card:#16161a;--muted:#888;--green:#22c55e;--blue:#3b82f6;--font-head:'Unbounded',sans-serif;--font-body:'Mulish',sans-serif}
@@ -92,7 +92,7 @@ button:hover{opacity:.9}
 </div>
 
 <script>
-const sb = supabase.createClient('https://exmwkutxjyrwqzhxtjba.supabase.co', 'sb_publishable_1MB5-b5BJAlK_XdoMLkZMA_0W-gC4sy');
+const sb = supabase.createClient('https://exmwkutxjyrwqzhxtjba.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV4bXdrdXR4anlyd3F6aHh0amJhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAyODM0OTMsImV4cCI6MjA5NTg1OTQ5M30.t0HWpU4Zyqq4PamrvKxp9ultAlvXKp33pub0hWBwlBA');
 let currentUser = null;
 let currentTab = 'available';
 let allRequests = [];
