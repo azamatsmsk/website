@@ -11,7 +11,7 @@
 <meta name="robots" content="index, follow">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=Mulish:wght@300;400;600&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script src="https://unpkg.com/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 <style>
 /* ═══ НОВЫЙ СВЕТЛЫЙ ДИЗАЙН ═══ */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -327,7 +327,7 @@ footer{background:var(--bg2);color:var(--text);padding:3rem 5vw 2rem;border-top:
 @keyframes spin{to{transform:rotate(360deg)}}
 
 @keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
-.reveal{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
+.reveal{opacity:1;transform:none;transition:opacity .6s ease,transform .6s ease}.js-loaded .reveal{opacity:0;transform:translateY(24px)}
 .reveal.visible{opacity:1;transform:none}
 
 @media(max-width:900px){
@@ -362,8 +362,8 @@ footer{background:var(--bg2);color:var(--text);padding:3rem 5vw 2rem;border-top:
   </ul>
   <div class="nav-right">
     <div id="nav-guest" style="display:flex;gap:.6rem">
-      <button class="btn btn-ghost btn-sm" onclick="openAuth('login')">Войти</button>
-      <button class="btn btn-primary btn-sm" onclick="openAuth('register')">Регистрация</button>
+      <button class="btn btn-ghost btn-sm" onclick="openAuth('login')" type="button">Войти</button>
+      <button class="btn btn-primary btn-sm" onclick="openAuth('register')" type="button">Регистрация</button>
     </div>
     <div id="nav-user" style="display:none">
       <div class="user-pill" onclick="toggleUserMenu()">
@@ -372,7 +372,7 @@ footer{background:var(--bg2);color:var(--text);padding:3rem 5vw 2rem;border-top:
         <span style="color:var(--muted);font-size:.8rem">▾</span>
       </div>
       <div id="user-menu" style="display:none;position:absolute;top:4.5rem;right:5vw;background:#fff;border:1px solid var(--border);border-radius:12px;padding:.8rem;min-width:180px;z-index:100">
-        <button onclick="window.location.href="cabinet.html"" style="display:block;width:100%;text-align:left;background:none;border:none;color:var(--text);font-family:var(--font-body);font-size:.88rem;padding:.6rem .8rem;border-radius:8px;cursor:pointer">👤 Личный кабинет</button>
+        <button onclick="location.href='cabinet.html'" style="display:block;width:100%;text-align:left;background:none;border:none;color:var(--text);font-family:var(--font-body);font-size:.88rem;padding:.6rem .8rem;border-radius:8px;cursor:pointer">👤 Личный кабинет</button>
         <button onclick="signOut()" style="display:block;width:100%;text-align:left;background:none;border:none;color:var(--red);font-family:var(--font-body);font-size:.88rem;padding:.6rem .8rem;border-radius:8px;cursor:pointer">🚪 Выйти</button>
       </div>
     </div>
@@ -861,6 +861,7 @@ footer{background:var(--bg2);color:var(--text);padding:3rem 5vw 2rem;border-top:
 </div>
 
 <script>
+document.body.classList.add("js-loaded");
 // ─── SUPABASE INIT ───
 const SUPABASE_URL = 'https://exmwkutxjyrwqzhxtjba.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV4bXdrdXR4anlyd3F6aHh0amJhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAyODM0OTMsImV4cCI6MjA5NTg1OTQ5M30.t0HWpU4Zyqq4PamrvKxp9ultAlvXKp33pub0hWBwlBA';
@@ -904,7 +905,7 @@ document.addEventListener('click', e => {
     document.getElementById('user-menu').style.display = 'none';
 });
 
-function window.location.href="cabinet.html" {
+function goToCabinet() { window.location.href="cabinet.html";
   document.getElementById('user-menu').style.display = 'none';
   document.getElementById('cabinet').scrollIntoView({ behavior: 'smooth' });
 }
