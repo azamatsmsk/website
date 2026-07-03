@@ -343,6 +343,64 @@ footer{background:var(--bg2);color:var(--text);padding:3rem 5vw 2rem;border-top:
   .tline-label{text-align:left;max-width:none}
 }
 
+
+/* WHATSAPP */
+.wa-btn{position:fixed;bottom:2rem;right:2rem;width:60px;height:60px;border-radius:50%;background:#25d366;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 24px rgba(37,211,102,.45);z-index:999;text-decoration:none;transition:transform .2s}
+.wa-btn:hover{transform:scale(1.1)}
+.wa-btn svg{width:32px;height:32px;fill:#fff}
+.wa-pulse{position:absolute;width:100%;height:100%;border-radius:50%;background:rgba(37,211,102,.4);animation:waPulse 2s infinite}
+@keyframes waPulse{0%{transform:scale(1);opacity:.8}100%{transform:scale(1.6);opacity:0}}
+.wa-tooltip{position:absolute;right:70px;background:#1a1a2e;color:#fff;padding:.5rem .9rem;border-radius:8px;font-size:.78rem;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .2s}
+.wa-btn:hover .wa-tooltip{opacity:1}
+
+/* FAQ */
+#faq{background:#fff}
+.faq-list{display:flex;flex-direction:column;gap:.8rem;max-width:780px}
+.faq-item{background:var(--bg);border:1.5px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.faq-q{display:flex;justify-content:space-between;align-items:center;padding:1.1rem 1.4rem;cursor:pointer;font-weight:600;font-size:.95rem;color:var(--text);gap:1rem}
+.faq-q:hover{background:var(--bg2)}
+.faq-icon{color:var(--red);font-size:1.2rem;flex-shrink:0;transition:transform .3s}
+.faq-item.open .faq-icon{transform:rotate(45deg)}
+.faq-a{display:none;padding:0 1.4rem 1.1rem;font-size:.88rem;color:var(--text2);line-height:1.7}
+.faq-item.open .faq-a{display:block}
+
+/* CALCULATOR */
+#calc{background:var(--bg)}
+.calc-card{background:#fff;border:1.5px solid var(--border);border-radius:var(--radius);padding:2rem;max-width:700px;box-shadow:var(--shadow)}
+.calc-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+.calc-result{background:linear-gradient(135deg,var(--red),var(--red-dark));border-radius:var(--radius);padding:1.5rem;text-align:center;color:#fff;margin-top:1.5rem;display:none}
+.calc-result.show{display:block}
+.calc-price{font-family:var(--font-head);font-size:2rem;font-weight:900;line-height:1;margin-bottom:.4rem}
+.calc-note{font-size:.8rem;opacity:.8}
+
+/* COUNTER */
+.counter-bar{background:var(--red);padding:1.2rem 5vw;display:flex;justify-content:center;gap:3rem;flex-wrap:wrap}
+.counter-item{text-align:center;color:#fff}
+.counter-num{font-family:var(--font-head);font-size:1.8rem;font-weight:900;line-height:1}
+.counter-lbl{font-size:.75rem;opacity:.8;margin-top:.3rem}
+
+/* BEFORE/AFTER */
+#beforeafter{background:var(--bg)}
+.ba-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem}
+.ba-card{background:#fff;border:1.5px solid var(--border);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow)}
+.ba-images{display:grid;grid-template-columns:1fr 1fr;gap:0}
+.ba-side{padding:1rem;text-align:center}
+.ba-side img{width:100%;height:140px;object-fit:cover;border-radius:var(--radius-sm);background:var(--bg2)}
+.ba-label{font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:.5rem}
+.ba-label.before{color:var(--red)}
+.ba-label.after{color:var(--green)}
+.ba-divider{width:1px;background:var(--border)}
+.ba-info{padding:1rem 1.2rem;border-top:1px solid var(--border)}
+.ba-device{font-family:var(--font-head);font-size:.85rem;font-weight:700;color:var(--text)}
+.ba-desc{font-size:.78rem;color:var(--muted);margin-top:.2rem}
+.ba-price{font-size:.82rem;color:var(--green);font-weight:600;margin-top:.4rem}
+.ba-placeholder{width:100%;height:140px;background:linear-gradient(135deg,var(--bg2),var(--border));border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;font-size:2rem}
+
+/* MAP */
+#map-section{background:#fff}
+.map-wrap{border-radius:var(--radius);overflow:hidden;border:1.5px solid var(--border);box-shadow:var(--shadow)}
+.map-wrap iframe{display:block;width:100%;height:380px;border:0}
+
 </style>
 </head>
 <body>
@@ -357,7 +415,7 @@ footer{background:var(--bg2);color:var(--text);padding:3rem 5vw 2rem;border-top:
     <li><a href="#tracker">Статус</a></li>
     <li><a href="cabinet.html" style="color:var(--red);font-weight:600">Кабинет</a></li>
     <li><a href="#tradein">Сдать телефон</a></li>
-    <li><a href="#contact">Контакты</a></li>
+    <li><a href="#faq">FAQ</a></li><li><a href="#contact">Контакты</a></li>
     <li><a href="master.html" style="color:var(--accent)">Мастерам 🔧</a></li>
   </ul>
   <div class="nav-right">
@@ -455,6 +513,15 @@ footer{background:var(--bg2);color:var(--text);padding:3rem 5vw 2rem;border-top:
   <div class="trust-item"><span class="trust-icon">📋</span>Официальный чек</div>
 </div>
 
+
+<!-- LIVE COUNTER -->
+<div class="counter-bar">
+  <div class="counter-item"><div class="counter-num" id="cnt-today">5</div><div class="counter-lbl">ремонтов сегодня</div></div>
+  <div class="counter-item"><div class="counter-num">5 000+</div><div class="counter-lbl">ремонтов всего</div></div>
+  <div class="counter-item"><div class="counter-num">30 мин</div><div class="counter-lbl">среднее время выезда</div></div>
+  <div class="counter-item"><div class="counter-num" id="cnt-masters">1</div><div class="counter-lbl">мастер онлайн</div></div>
+</div>
+
 <!-- SERVICES -->
 <section id="services">
   <div class="section-tag">Что мы ремонтируем</div>
@@ -515,6 +582,52 @@ footer{background:var(--bg2);color:var(--text);padding:3rem 5vw 2rem;border-top:
 </section>
 
 <!-- ЛИЧНЫЙ КАБИНЕТ -->
+
+<!-- BEFORE AFTER -->
+<section id="beforeafter">
+  <div class="section-tag">Наши работы</div>
+  <h2 class="section-title reveal">До и после ремонта</h2>
+  <div class="ba-grid">
+    <div class="ba-card reveal">
+      <div class="ba-images">
+        <div class="ba-side"><div class="ba-label before">До</div><div class="ba-placeholder">💔</div></div>
+        <div class="ba-divider"></div>
+        <div class="ba-side"><div class="ba-label after">После</div><div class="ba-placeholder">✨</div></div>
+      </div>
+      <div class="ba-info">
+        <div class="ba-device">iPhone 13 Pro — разбитый экран</div>
+        <div class="ba-desc">Клиент уронил телефон. Замена дисплея за 50 минут.</div>
+        <div class="ba-price">✓ Выполнено за 50 минут</div>
+      </div>
+    </div>
+    <div class="ba-card reveal">
+      <div class="ba-images">
+        <div class="ba-side"><div class="ba-label before">До</div><div class="ba-placeholder">💧</div></div>
+        <div class="ba-divider"></div>
+        <div class="ba-side"><div class="ba-label after">После</div><div class="ba-placeholder">✅</div></div>
+      </div>
+      <div class="ba-info">
+        <div class="ba-device">Samsung Galaxy S22 — попал в воду</div>
+        <div class="ba-desc">Просушка, чистка платы, замена разъёма. Телефон ожил.</div>
+        <div class="ba-price">✓ Выполнено за 1.5 часа</div>
+      </div>
+    </div>
+    <div class="ba-card reveal">
+      <div class="ba-images">
+        <div class="ba-side"><div class="ba-label before">До</div><div class="ba-placeholder">🔋</div></div>
+        <div class="ba-divider"></div>
+        <div class="ba-side"><div class="ba-label after">После</div><div class="ba-placeholder">⚡</div></div>
+      </div>
+      <div class="ba-info">
+        <div class="ba-device">iPhone 12 — не держит заряд</div>
+        <div class="ba-desc">Замена аккумулятора. Держит заряд весь день.</div>
+        <div class="ba-price">✓ Выполнено за 30 минут</div>
+      </div>
+    </div>
+  </div>
+  <p style="font-size:.8rem;color:var(--muted);margin-top:1.5rem;text-align:center">📸 Реальные фото работ добавим скоро — пока показываем схематично</p>
+</section>
+
 <!-- REVIEWS -->
 <section id="reviews">
   <div class="section-tag">Отзывы</div>
@@ -766,6 +879,100 @@ footer{background:var(--bg2);color:var(--text);padding:3rem 5vw 2rem;border-top:
   </div>
 </section>
 
+
+<!-- CALCULATOR -->
+<section id="calc">
+  <div class="section-tag">Калькулятор</div>
+  <h2 class="section-title reveal">Узнайте примерную стоимость</h2>
+  <div class="calc-card reveal">
+    <div class="calc-grid">
+      <div class="form-group">
+        <label>Марка телефона</label>
+        <select id="calc-brand" onchange="calcPrice()">
+          <option value="">— Выберите —</option>
+          <option value="iphone16">iPhone 15/16 Pro</option>
+          <option value="iphone13">iPhone 13/14</option>
+          <option value="iphone11">iPhone 11/12</option>
+          <option value="iphoneold">iPhone 7/8/X</option>
+          <option value="samsung_s">Samsung Galaxy S-серия</option>
+          <option value="samsung_a">Samsung Galaxy A-серия</option>
+          <option value="xiaomi">Xiaomi / Redmi</option>
+          <option value="other">Другой</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Тип ремонта</label>
+        <select id="calc-type" onchange="calcPrice()">
+          <option value="">— Выберите —</option>
+          <option value="screen">Замена экрана</option>
+          <option value="battery">Замена батареи</option>
+          <option value="water">После воды</option>
+          <option value="charge">Разъём зарядки</option>
+          <option value="camera">Камера</option>
+          <option value="sound">Звук / микрофон</option>
+        </select>
+      </div>
+    </div>
+    <div class="calc-result" id="calc-result">
+      <div class="calc-price" id="calc-price-val">—</div>
+      <div class="calc-note">Ориентировочная цена · Точная стоимость — после бесплатной диагностики</div>
+      <a href="#contact" class="btn btn-primary" style="display:inline-block;margin-top:1rem;background:#fff;color:var(--red)">Вызвать мастера →</a>
+    </div>
+  </div>
+</section>
+
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="section-tag">Частые вопросы</div>
+  <h2 class="section-title reveal">Отвечаем на ваши вопросы</h2>
+  <div class="faq-list reveal">
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Сколько стоит ремонт? <span class="faq-icon">+</span></div>
+      <div class="faq-a">Зависит от модели телефона и типа поломки. Диагностика бесплатная — мастер приедет, осмотрит и назовёт точную цену перед началом работ. Вы вправе отказаться, если цена не устраивает.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Как долго длится ремонт? <span class="faq-icon">+</span></div>
+      <div class="faq-a">80% ремонтов выполняем прямо на месте за 30–90 минут. Сложные случаи (плата, корпус) — забираем на 1–2 дня и привозим обратно.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Есть ли гарантия? <span class="faq-icon">+</span></div>
+      <div class="faq-a">Да — 12 месяцев на все виды работ и установленные запчасти. Если в течение года возникнет та же проблема по нашей вине — устраним бесплатно. Выдаём гарантийный талон и чек.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Какие запчасти используете? <span class="faq-icon">+</span></div>
+      <div class="faq-a">Используем оригинальные и сертифицированные совместимые комплектующие. Перед ремонтом мастер уточняет какой тип запчасти вам нужен и сообщает разницу в цене и качестве.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Как можно оплатить? <span class="faq-icon">+</span></div>
+      <div class="faq-a">Наличными, картой любого банка или переводом на Kaspi. Оплата только после завершения ремонта — до начала работ ничего не берём.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Работаете ли вы в выходные? <span class="faq-icon">+</span></div>
+      <div class="faq-a">Да, работаем ежедневно с 8:00 до 22:00, включая субботу и воскресенье. Заявки принимаем круглосуточно.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">По каким районам Астаны выезжаете? <span class="faq-icon">+</span></div>
+      <div class="faq-a">Выезжаем по всей Астане — Есиль, Алматы, Сарыарка, Байконыр, Нура. Выезд бесплатный. Также можете приехать к нам сами.</div>
+    </div>
+  </div>
+</section>
+
+
+<!-- MAP -->
+<section id="map-section">
+  <div class="section-tag">Мы в Астане</div>
+  <h2 class="section-title reveal">Выезжаем по всему городу</h2>
+  <div class="map-wrap reveal">
+    <iframe src="https://2gis.kz/astana/geo/70000001018760404?m=71.430411%2C51.180196%2F11" allowfullscreen></iframe>
+  </div>
+  <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-top:1.2rem">
+    <div style="background:var(--bg);border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:.7rem 1.2rem;font-size:.85rem"><strong>г. Астана</strong> — весь город</div>
+    <div style="background:var(--red-light);border:1px solid rgba(229,57,53,.2);border-radius:var(--radius-sm);padding:.7rem 1.2rem;font-size:.85rem;color:var(--red)">🚗 Выезд бесплатно</div>
+    <div style="background:var(--green-light);border:1px solid rgba(46,125,50,.2);border-radius:var(--radius-sm);padding:.7rem 1.2rem;font-size:.85rem;color:var(--green)">⏱ Прибытие за 30 минут</div>
+  </div>
+</section>
+
 <!-- CONTACT -->
 <section id="contact">
   <div class="contact-inner">
@@ -834,6 +1041,8 @@ footer{background:var(--bg2);color:var(--text);padding:3rem 5vw 2rem;border-top:
       <div class="footer-col-title">Услуги</div>
       <div class="footer-links">
         <a href="#services">Ремонт телефонов</a>
+        <a href="iphone.html">Ремонт iPhone</a>
+        <a href="samsung.html">Ремонт Samsung</a>
         <a href="#tradein">Сдать телефон</a>
         <a href="#tracker">Статус заявки</a>
         <a href="#reviews">Отзывы</a>
@@ -843,8 +1052,9 @@ footer{background:var(--bg2);color:var(--text);padding:3rem 5vw 2rem;border-top:
       <div class="footer-col-title">Контакты</div>
       <div class="footer-links">
         <a href="tel:+77072950865">+7 707 295-08-65</a>
-        <a href="#">г. Астана</a>
-        <a href="#">Ежедневно 8:00–22:00</a>
+        <a href="esil.html">Район Есиль</a>
+        <a href="baykonyur.html">Район Байконыр</a>
+        <a href="saryarka.html">Район Сарыарка</a>
         <a href="master.html">Кабинет мастера 🔧</a>
       </div>
     </div>
@@ -854,7 +1064,7 @@ footer{background:var(--bg2);color:var(--text);padding:3rem 5vw 2rem;border-top:
     <p>Оплата наличными, картой или Kaspi после ремонта</p>
   </div>
 </footer>
-<div class="legal-bar">Цены на сайте ориентировочные. Точная стоимость — после бесплатной диагностики на месте. · <a href="#">Политика конфиденциальности</a></div>
+<div class="legal-bar">Цены на сайте ориентировочные. Точная стоимость — после бесплатной диагностики на месте. · <a href="privacy.html">Политика конфиденциальности</a></div>
 <div class="legal-bar">
   <p>Оплата наличными, картой или переводом на Kaspi после выполнения работ. Чек и гарантийный талон выдаются на каждый заказ.</p>
   <a href="#contact">Реквизиты / договор оферты</a>
@@ -1198,6 +1408,43 @@ function submitForm() {
 }
 function goTrack() { if(window._lastOrderId){document.getElementById('track-input').value=window._lastOrderId;document.getElementById('tracker').scrollIntoView({behavior:'smooth'});setTimeout(()=>showOrder(window._lastOrderId),400);} }
 
+
+// ─── FAQ ───
+function toggleFaq(el) {
+  const item = el.parentElement;
+  item.classList.toggle('open');
+}
+
+// ─── CALCULATOR ───
+const CALC_PRICES = {
+  iphone16: {screen:'от 35 000 ₸',battery:'от 12 000 ₸',water:'от 18 000 ₸',charge:'от 10 000 ₸',camera:'от 20 000 ₸',sound:'от 8 000 ₸'},
+  iphone13: {screen:'от 22 000 ₸',battery:'от 9 000 ₸',water:'от 14 000 ₸',charge:'от 8 000 ₸',camera:'от 14 000 ₸',sound:'от 6 000 ₸'},
+  iphone11: {screen:'от 14 000 ₸',battery:'от 7 000 ₸',water:'от 11 000 ₸',charge:'от 6 000 ₸',camera:'от 10 000 ₸',sound:'от 5 000 ₸'},
+  iphoneold:{screen:'от 8 000 ₸',battery:'от 5 000 ₸',water:'от 7 000 ₸',charge:'от 4 000 ₸',camera:'от 6 000 ₸',sound:'от 3 500 ₸'},
+  samsung_s:{screen:'от 18 000 ₸',battery:'от 7 000 ₸',water:'от 12 000 ₸',charge:'от 6 000 ₸',camera:'от 10 000 ₸',sound:'от 5 000 ₸'},
+  samsung_a:{screen:'от 10 000 ₸',battery:'от 5 000 ₸',water:'от 8 000 ₸',charge:'от 4 000 ₸',camera:'от 7 000 ₸',sound:'от 3 500 ₸'},
+  xiaomi:   {screen:'от 8 000 ₸',battery:'от 4 500 ₸',water:'от 7 000 ₸',charge:'от 3 500 ₸',camera:'от 6 000 ₸',sound:'от 3 000 ₸'},
+  other:    {screen:'от 6 000 ₸',battery:'от 4 000 ₸',water:'от 6 000 ₸',charge:'от 3 000 ₸',camera:'от 5 000 ₸',sound:'от 3 000 ₸'},
+};
+function calcPrice() {
+  const brand = document.getElementById('calc-brand').value;
+  const type  = document.getElementById('calc-type').value;
+  const res   = document.getElementById('calc-result');
+  const val   = document.getElementById('calc-price-val');
+  if (!brand || !type) { res.classList.remove('show'); return; }
+  val.textContent = CALC_PRICES[brand]?.[type] || 'Уточняется';
+  res.classList.add('show');
+}
+
+// ─── LIVE COUNTER ───
+(function() {
+  const hour = new Date().getHours();
+  const todayCount = (hour < 8) ? 0 : Math.min(Math.floor((hour - 8) * 0.6) + 1, 9);
+  const el = document.getElementById('cnt-today');
+  if (el) el.textContent = todayCount;
+})();
+
+
 // ─── SCROLL REVEAL ───
 const reveals = document.querySelectorAll('.reveal');
 const observer = new IntersectionObserver(entries => { entries.forEach((e,i) => { if(e.isIntersecting) setTimeout(()=>e.target.classList.add('visible'),i*80); }); }, {threshold:.1});
@@ -1205,5 +1452,13 @@ reveals.forEach(el => observer.observe(el));
 
 document.getElementById('track-input').addEventListener('keydown', e => { if(e.key==='Enter') trackOrder(); });
 </script>
+
+<!-- WHATSAPP BUTTON -->
+<a class="wa-btn" href="https://wa.me/77072950865?text=Здравствуйте!%20Хочу%20вызвать%20мастера" target="_blank" rel="noopener">
+  <div class="wa-pulse"></div>
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.118 1.528 5.852L0 24l6.335-1.524A11.954 11.954 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.006-1.372l-.359-.213-3.722.896.929-3.624-.234-.372A9.818 9.818 0 1112 21.818z"/></svg>
+  <span class="wa-tooltip">Написать в WhatsApp</span>
+</a>
+
 </body>
 </html>
