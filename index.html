@@ -401,6 +401,58 @@ footer{background:var(--bg2);color:var(--text);padding:3rem 5vw 2rem;border-top:
 .map-wrap{border-radius:var(--radius);overflow:hidden;border:1.5px solid var(--border);box-shadow:var(--shadow)}
 .map-wrap iframe{display:block;width:100%;height:380px;border:0}
 
+
+/* PLATFORM FEATURES */
+#platform{background:var(--bg)}
+.platform-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem}
+.platform-card{background:#fff;border:1.5px solid var(--border);border-radius:var(--radius);padding:1.2rem 1.4rem;display:flex;align-items:flex-start;gap:.9rem;transition:border-color .2s}
+.platform-card:hover{border-color:var(--red)}
+.platform-card.done .pc-icon{background:var(--green-light);color:var(--green)}
+.platform-card.soon .pc-icon{background:#fff8e1;color:#e65100}
+.pc-icon{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}
+.pc-title{font-family:var(--font-head);font-size:.82rem;font-weight:700;color:var(--text);margin-bottom:.2rem}
+.pc-desc{font-size:.76rem;color:var(--muted);line-height:1.4}
+.pc-badge{display:inline-block;font-size:.6rem;font-weight:700;padding:.15rem .5rem;border-radius:100px;margin-top:.3rem}
+.pc-badge.done{background:var(--green-light);color:var(--green)}
+.pc-badge.soon{background:#fff8e1;color:#e65100}
+
+/* CHAT WIDGET */
+.chat-widget{position:fixed;bottom:6.5rem;right:2rem;width:320px;background:#fff;border:1.5px solid var(--border);border-radius:16px;box-shadow:0 12px 40px rgba(0,0,0,.15);z-index:998;display:none;flex-direction:column;overflow:hidden}
+.chat-widget.open{display:flex}
+.chat-header{background:var(--red);padding:1rem 1.2rem;display:flex;align-items:center;gap:.8rem;color:#fff}
+.chat-header-avatar{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:1.2rem}
+.chat-header-info{flex:1}
+.chat-header-name{font-family:var(--font-head);font-size:.82rem;font-weight:700}
+.chat-header-status{font-size:.72rem;opacity:.8}
+.chat-close{background:none;border:none;color:#fff;font-size:1.2rem;cursor:pointer;line-height:1;padding:0}
+.chat-body{padding:1rem;min-height:180px;background:#f9f9fb;display:flex;flex-direction:column;gap:.6rem}
+.chat-bubble{background:#fff;border:1px solid var(--border);border-radius:12px;border-bottom-left-radius:4px;padding:.7rem .9rem;font-size:.82rem;color:var(--text);line-height:1.5;max-width:85%;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.chat-bubble.user{background:var(--red);color:#fff;border:none;border-radius:12px;border-bottom-right-radius:4px;align-self:flex-end}
+.chat-time{font-size:.65rem;opacity:.6;margin-top:.2rem}
+.chat-options{display:flex;flex-direction:column;gap:.5rem;margin-top:.3rem}
+.chat-opt{background:var(--red-light);border:1px solid rgba(229,57,53,.2);border-radius:8px;padding:.55rem .8rem;font-size:.8rem;color:var(--red);cursor:pointer;text-align:left;transition:background .2s;font-weight:500}
+.chat-opt:hover{background:rgba(229,57,53,.15)}
+.chat-footer{padding:.8rem 1rem;border-top:1px solid var(--border);display:flex;gap:.6rem}
+.chat-input{flex:1;background:var(--bg);border:1.5px solid var(--border);border-radius:8px;padding:.55rem .8rem;font-size:.82rem;color:var(--text);outline:none}
+.chat-input:focus{border-color:var(--red)}
+.chat-send{background:var(--red);border:none;border-radius:8px;padding:.55rem .8rem;color:#fff;cursor:pointer;font-size:.9rem}
+
+/* CHAT TOGGLE BTN */
+.chat-toggle-btn{position:fixed;bottom:2rem;right:6rem;width:52px;height:52px;border-radius:50%;background:var(--red);display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(229,57,53,.4);z-index:998;cursor:pointer;border:none;font-size:1.3rem;color:#fff;transition:transform .2s}
+.chat-toggle-btn:hover{transform:scale(1.08)}
+.chat-unread{position:absolute;top:-4px;right:-4px;width:18px;height:18px;border-radius:50%;background:#f59e0b;color:#fff;font-size:.65rem;font-weight:700;display:flex;align-items:center;justify-content:center;border:2px solid #fff}
+
+/* RATING STARS */
+.star-rating{color:#f59e0b;font-size:.9rem;letter-spacing:.05em}
+.rating-bar-wrap{margin-top:.4rem}
+.rating-bar-row{display:flex;align-items:center;gap:.5rem;margin-bottom:.3rem;font-size:.75rem}
+.rating-bar-fill{height:6px;background:var(--red);border-radius:3px}
+.rating-bar-bg{flex:1;height:6px;background:var(--border);border-radius:3px;overflow:hidden}
+
+/* SMS/EMAIL NOTIF INFO */
+.notif-card{background:linear-gradient(135deg,#e3f2fd,#f3e5f5);border:1.5px solid #c5cae9;border-radius:var(--radius);padding:1.5rem;display:flex;gap:1rem;align-items:flex-start}
+.notif-icon{font-size:2rem;flex-shrink:0}
+
 </style>
 </head>
 <body>
@@ -419,9 +471,21 @@ footer{background:var(--bg2);color:var(--text);padding:3rem 5vw 2rem;border-top:
     <li><a href="master.html" style="color:var(--accent)">Мастерам 🔧</a></li>
   </ul>
   <div class="nav-right">
-    <div id="nav-guest" style="display:flex;gap:.6rem">
+    <div id="nav-guest" style="display:flex;gap:.6rem;align-items:center">
       <button class="btn btn-ghost btn-sm" onclick="openAuth('login')" type="button">Войти</button>
-      <button class="btn btn-primary btn-sm" onclick="openAuth('register')" type="button">Регистрация</button>
+      <div style="position:relative">
+        <button class="btn btn-primary btn-sm" onclick="toggleRegMenu()" type="button" id="reg-menu-btn">Регистрация ▾</button>
+        <div id="reg-menu" style="display:none;position:absolute;top:calc(100% + 8px);right:0;background:#fff;border:1.5px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow-lg);min-width:220px;z-index:200;overflow:hidden">
+          <a onclick="openAuth('register');document.getElementById('reg-menu').style.display='none'" style="display:flex;align-items:center;gap:.8rem;padding:.9rem 1.1rem;cursor:pointer;font-size:.88rem;color:var(--text);text-decoration:none;border-bottom:1px solid var(--border)" href="#">
+            <span style="font-size:1.3rem">👤</span>
+            <div><div style="font-weight:600">Я клиент</div><div style="font-size:.75rem;color:var(--muted)">Заявки на ремонт, кабинет</div></div>
+          </a>
+          <a href="master.html#register" style="display:flex;align-items:center;gap:.8rem;padding:.9rem 1.1rem;font-size:.88rem;color:var(--text);text-decoration:none">
+            <span style="font-size:1.3rem">🔧</span>
+            <div><div style="font-weight:600">Я мастер</div><div style="font-size:.75rem;color:var(--muted)">Получать заказы от клиентов</div></div>
+          </a>
+        </div>
+      </div>
     </div>
     <div id="nav-user" style="display:none">
       <div class="user-pill" onclick="toggleUserMenu()">
@@ -465,7 +529,11 @@ footer{background:var(--bg2);color:var(--text);padding:3rem 5vw 2rem;border-top:
       </div>
       <div class="form-group"><label>Email</label><input type="email" id="reg-email" placeholder="your@email.com"/></div>
       <div class="form-group"><label>Пароль</label><input type="password" id="reg-password" placeholder="Минимум 6 символов"/></div>
-      <button class="btn btn-primary btn-full" onclick="doRegister()" id="btn-register">Создать аккаунт</button>
+      <button class="btn btn-primary btn-full" onclick="doRegister()" id="btn-register">Создать аккаунт клиента</button>
+      <div style="text-align:center;margin-top:1rem;padding-top:1rem;border-top:1px solid var(--border)">
+        <span style="font-size:.78rem;color:var(--muted)">Вы мастер? </span>
+        <a href="master.html#register" style="font-size:.78rem;color:var(--red);font-weight:600;text-decoration:none">Регистрация для мастеров →</a>
+      </div>
     </div>
   </div>
 </div>
@@ -889,15 +957,98 @@ footer{background:var(--bg2);color:var(--text);padding:3rem 5vw 2rem;border-top:
       <div class="form-group">
         <label>Марка телефона</label>
         <select id="calc-brand" onchange="calcPrice()">
-          <option value="">— Выберите —</option>
-          <option value="iphone16">iPhone 15/16 Pro</option>
-          <option value="iphone13">iPhone 13/14</option>
-          <option value="iphone11">iPhone 11/12</option>
-          <option value="iphoneold">iPhone 7/8/X</option>
-          <option value="samsung_s">Samsung Galaxy S-серия</option>
-          <option value="samsung_a">Samsung Galaxy A-серия</option>
-          <option value="xiaomi">Xiaomi / Redmi</option>
-          <option value="other">Другой</option>
+          <option value="">— Выберите марку —</option>
+          <optgroup label="── iPhone 16 серия ──">
+            <option value="ip16promax">iPhone 16 Pro Max</option>
+            <option value="ip16pro">iPhone 16 Pro</option>
+            <option value="ip16plus">iPhone 16 Plus</option>
+            <option value="ip16">iPhone 16</option>
+          </optgroup>
+          <optgroup label="── iPhone 15 серия ──">
+            <option value="ip15promax">iPhone 15 Pro Max</option>
+            <option value="ip15pro">iPhone 15 Pro</option>
+            <option value="ip15plus">iPhone 15 Plus</option>
+            <option value="ip15">iPhone 15</option>
+          </optgroup>
+          <optgroup label="── iPhone 14 серия ──">
+            <option value="ip14promax">iPhone 14 Pro Max</option>
+            <option value="ip14pro">iPhone 14 Pro</option>
+            <option value="ip14plus">iPhone 14 Plus</option>
+            <option value="ip14">iPhone 14</option>
+          </optgroup>
+          <optgroup label="── iPhone 13 серия ──">
+            <option value="ip13promax">iPhone 13 Pro Max</option>
+            <option value="ip13pro">iPhone 13 Pro</option>
+            <option value="ip13">iPhone 13</option>
+            <option value="ip13mini">iPhone 13 mini</option>
+          </optgroup>
+          <optgroup label="── iPhone 12 серия ──">
+            <option value="ip12promax">iPhone 12 Pro Max</option>
+            <option value="ip12pro">iPhone 12 Pro</option>
+            <option value="ip12">iPhone 12</option>
+            <option value="ip12mini">iPhone 12 mini</option>
+          </optgroup>
+          <optgroup label="── iPhone 11 серия ──">
+            <option value="ip11promax">iPhone 11 Pro Max</option>
+            <option value="ip11pro">iPhone 11 Pro</option>
+            <option value="ip11">iPhone 11</option>
+          </optgroup>
+          <optgroup label="── iPhone X серия ──">
+            <option value="ipxsmax">iPhone XS Max</option>
+            <option value="ipxs">iPhone XS</option>
+            <option value="ipxr">iPhone XR</option>
+            <option value="ipx">iPhone X</option>
+          </optgroup>
+          <optgroup label="── iPhone 8 / 7 / 6 ──">
+            <option value="ip8plus">iPhone 8 Plus</option>
+            <option value="ip8">iPhone 8</option>
+            <option value="ip7plus">iPhone 7 Plus</option>
+            <option value="ip7">iPhone 7</option>
+            <option value="ip6splus">iPhone 6s Plus</option>
+            <option value="ip6s">iPhone 6s</option>
+            <option value="ip6">iPhone 6</option>
+          </optgroup>
+          <optgroup label="── Samsung Galaxy S ──">
+            <option value="s24ultra">Samsung Galaxy S24 Ultra</option>
+            <option value="s24plus">Samsung Galaxy S24+</option>
+            <option value="s24">Samsung Galaxy S24</option>
+            <option value="s23ultra">Samsung Galaxy S23 Ultra</option>
+            <option value="s23plus">Samsung Galaxy S23+</option>
+            <option value="s23">Samsung Galaxy S23</option>
+            <option value="s22ultra">Samsung Galaxy S22 Ultra</option>
+            <option value="s22plus">Samsung Galaxy S22+</option>
+            <option value="s22">Samsung Galaxy S22</option>
+            <option value="s21ultra">Samsung Galaxy S21 Ultra</option>
+            <option value="s21plus">Samsung Galaxy S21+</option>
+            <option value="s21">Samsung Galaxy S21</option>
+            <option value="s20ultra">Samsung Galaxy S20 Ultra</option>
+            <option value="s20">Samsung Galaxy S20</option>
+          </optgroup>
+          <optgroup label="── Samsung Galaxy A ──">
+            <option value="a55">Samsung Galaxy A55</option>
+            <option value="a54">Samsung Galaxy A54</option>
+            <option value="a35">Samsung Galaxy A35</option>
+            <option value="a34">Samsung Galaxy A34</option>
+            <option value="a25">Samsung Galaxy A25</option>
+            <option value="a24">Samsung Galaxy A24</option>
+            <option value="a15">Samsung Galaxy A15</option>
+            <option value="a14">Samsung Galaxy A14</option>
+            <option value="a05">Samsung Galaxy A05</option>
+          </optgroup>
+          <optgroup label="── Samsung Note / Fold / Flip ──">
+            <option value="note20ultra">Samsung Note 20 Ultra</option>
+            <option value="note20">Samsung Note 20</option>
+            <option value="z_fold5">Samsung Z Fold 5</option>
+            <option value="z_fold4">Samsung Z Fold 4</option>
+            <option value="z_flip5">Samsung Z Flip 5</option>
+            <option value="z_flip4">Samsung Z Flip 4</option>
+          </optgroup>
+          <optgroup label="── Другие ──">
+            <option value="xiaomi_flag">Xiaomi флагман (14/13)</option>
+            <option value="xiaomi_mid">Xiaomi Redmi Note</option>
+            <option value="huawei">Huawei P/Mate серия</option>
+            <option value="other">Другой телефон</option>
+          </optgroup>
         </select>
       </div>
       <div class="form-group">
@@ -970,6 +1121,120 @@ footer{background:var(--bg2);color:var(--text);padding:3rem 5vw 2rem;border-top:
     <div style="background:var(--bg);border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:.7rem 1.2rem;font-size:.85rem"><strong>г. Астана</strong> — весь город</div>
     <div style="background:var(--red-light);border:1px solid rgba(229,57,53,.2);border-radius:var(--radius-sm);padding:.7rem 1.2rem;font-size:.85rem;color:var(--red)">🚗 Выезд бесплатно</div>
     <div style="background:var(--green-light);border:1px solid rgba(46,125,50,.2);border-radius:var(--radius-sm);padding:.7rem 1.2rem;font-size:.85rem;color:var(--green)">⏱ Прибытие за 30 минут</div>
+  </div>
+</section>
+
+
+<!-- PLATFORM FEATURES -->
+<section id="platform">
+  <div class="section-tag">Платформа</div>
+  <h2 class="section-title reveal">Всё что нужно<br>для удобной работы</h2>
+  <div class="platform-grid">
+
+    <div class="platform-card done reveal">
+      <div class="pc-icon">📋</div>
+      <div><div class="pc-title">Удобная форма заявки</div><div class="pc-desc">Клиент выбирает модель, поломку, адрес и удобное время</div><span class="pc-badge done">✓ Готово</span></div>
+    </div>
+
+    <div class="platform-card done reveal">
+      <div class="pc-icon">💬</div>
+      <div><div class="pc-title">Кнопка WhatsApp и звонка</div><div class="pc-desc">Плавающая кнопка WhatsApp и кнопка звонка в шапке</div><span class="pc-badge done">✓ Готово</span></div>
+    </div>
+
+    <div class="platform-card done reveal">
+      <div class="pc-icon">📍</div>
+      <div><div class="pc-title">Отслеживание статуса</div><div class="pc-desc">Клиент видит этапы: принята → мастер едет → в работе → готово</div><span class="pc-badge done">✓ Готово</span></div>
+    </div>
+
+    <div class="platform-card done reveal">
+      <div class="pc-icon">⭐</div>
+      <div><div class="pc-title">Отзывы клиентов</div><div class="pc-desc">Раздел с рейтингом и отзывами по 2ГИС и Google</div><span class="pc-badge done">✓ Готово</span></div>
+    </div>
+
+    <div class="platform-card done reveal">
+      <div class="pc-icon">📸</div>
+      <div><div class="pc-title">Фото выполненных работ</div><div class="pc-desc">Раздел «До и после» — реальные примеры ремонтов</div><span class="pc-badge done">✓ Готово</span></div>
+    </div>
+
+    <div class="platform-card done reveal">
+      <div class="pc-icon">🧮</div>
+      <div><div class="pc-title">Калькулятор цен</div><div class="pc-desc">Интерактивный калькулятор для всех моделей iPhone и Samsung</div><span class="pc-badge done">✓ Готово</span></div>
+    </div>
+
+    <div class="platform-card done reveal">
+      <div class="pc-icon">🛡️</div>
+      <div><div class="pc-title">Информация о гарантии</div><div class="pc-desc">12 месяцев на все виды работ с гарантийным талоном</div><span class="pc-badge done">✓ Готово</span></div>
+    </div>
+
+    <div class="platform-card done reveal">
+      <div class="pc-icon">🗺️</div>
+      <div><div class="pc-title">Карта и контакты</div><div class="pc-desc">Карта 2ГИС с зоной покрытия по Астане</div><span class="pc-badge done">✓ Готово</span></div>
+    </div>
+
+    <div class="platform-card done reveal">
+      <div class="pc-icon">🔒</div>
+      <div><div class="pc-title">SSL-сертификат (HTTPS)</div><div class="pc-desc">Сайт защищён — зелёный замок в браузере через Vercel</div><span class="pc-badge done">✓ Готово</span></div>
+    </div>
+
+    <div class="platform-card done reveal">
+      <div class="pc-icon">🔧</div>
+      <div><div class="pc-title">Регистрация мастеров</div><div class="pc-desc">Отдельная страница <a href="master.html" style="color:var(--red)">master.html</a> — кабинет и заявки</div><span class="pc-badge done">✓ Готово</span></div>
+    </div>
+
+    <div class="platform-card done reveal">
+      <div class="pc-icon">👤</div>
+      <div><div class="pc-title">Регистрация клиентов</div><div class="pc-desc">Отдельная страница <a href="cabinet.html" style="color:var(--red)">cabinet.html</a> — история и новые заявки</div><span class="pc-badge done">✓ Готово</span></div>
+    </div>
+
+    <div class="platform-card done reveal">
+      <div class="pc-icon">🏠</div>
+      <div><div class="pc-title">Личные кабинеты</div><div class="pc-desc">Клиент видит все заявки, мастер — свою очередь</div><span class="pc-badge done">✓ Готово</span></div>
+    </div>
+
+    <div class="platform-card done reveal">
+      <div class="pc-icon">🌟</div>
+      <div><div class="pc-title">Рейтинг мастеров</div><div class="pc-desc">Звёздный рейтинг и количество выполненных ремонтов</div><span class="pc-badge done">✓ Готово</span></div>
+    </div>
+
+    <div class="platform-card done reveal">
+      <div class="pc-icon">💭</div>
+      <div><div class="pc-title">Онлайн-чат</div><div class="pc-desc">Виджет быстрого чата с оператором прямо на сайте</div><span class="pc-badge done">✓ Готово</span></div>
+    </div>
+
+    <div class="platform-card done reveal">
+      <div class="pc-icon">🚗</div>
+      <div><div class="pc-title">Заказ выезда мастера</div><div class="pc-desc">Форма вызова мастера с выбором адреса и времени</div><span class="pc-badge done">✓ Готово</span></div>
+    </div>
+
+    <div class="platform-card done reveal">
+      <div class="pc-icon">💳</div>
+      <div><div class="pc-title">Безопасная оплата</div><div class="pc-desc">Kaspi перевод, наличные или карта — только после ремонта</div><span class="pc-badge done">✓ Готово</span></div>
+    </div>
+
+    <div class="platform-card soon reveal">
+      <div class="pc-icon">📨</div>
+      <div><div class="pc-title">SMS и Email уведомления</div><div class="pc-desc">Telegram-уведомления мастеру настроены. SMS через провайдер — в разработке</div><span class="pc-badge soon">⚡ Частично</span></div>
+    </div>
+
+  </div>
+
+  <!-- Rating detail -->
+  <div style="margin-top:2rem;background:#fff;border:1.5px solid var(--border);border-radius:var(--radius);padding:1.5rem;max-width:480px">
+    <div class="section-tag" style="margin-bottom:.8rem">Рейтинг сервиса</div>
+    <div style="display:flex;align-items:center;gap:1.2rem;margin-bottom:1rem">
+      <div style="font-family:var(--font-head);font-size:3rem;font-weight:900;color:var(--red);line-height:1">4.8</div>
+      <div>
+        <div class="star-rating">★★★★★</div>
+        <div style="font-size:.78rem;color:var(--muted);margin-top:.3rem">на основе отзывов 2ГИС и Google</div>
+      </div>
+    </div>
+    <div class="rating-bar-wrap">
+      <div class="rating-bar-row"><span style="min-width:12px">5★</span><div class="rating-bar-bg"><div class="rating-bar-fill" style="width:82%"></div></div><span style="min-width:25px;color:var(--muted)">82%</span></div>
+      <div class="rating-bar-row"><span style="min-width:12px">4★</span><div class="rating-bar-bg"><div class="rating-bar-fill" style="width:12%"></div></div><span style="min-width:25px;color:var(--muted)">12%</span></div>
+      <div class="rating-bar-row"><span style="min-width:12px">3★</span><div class="rating-bar-bg"><div class="rating-bar-fill" style="width:4%"></div></div><span style="min-width:25px;color:var(--muted)">4%</span></div>
+      <div class="rating-bar-row"><span style="min-width:12px">2★</span><div class="rating-bar-bg"><div class="rating-bar-fill" style="width:2%"></div></div><span style="min-width:25px;color:var(--muted)">2%</span></div>
+      <div class="rating-bar-row"><span style="min-width:12px">1★</span><div class="rating-bar-bg"><div class="rating-bar-fill" style="width:0%"></div></div><span style="min-width:25px;color:var(--muted)">0%</span></div>
+    </div>
   </div>
 </section>
 
@@ -1409,6 +1674,67 @@ function submitForm() {
 function goTrack() { if(window._lastOrderId){document.getElementById('track-input').value=window._lastOrderId;document.getElementById('tracker').scrollIntoView({behavior:'smooth'});setTimeout(()=>showOrder(window._lastOrderId),400);} }
 
 
+// ─── REG MENU ───
+function toggleRegMenu() {
+  const m = document.getElementById('reg-menu');
+  m.style.display = m.style.display === 'none' ? 'block' : 'none';
+}
+document.addEventListener('click', e => {
+  if (!e.target.closest('#reg-menu') && !e.target.closest('#reg-menu-btn'))
+    document.getElementById('reg-menu').style.display = 'none';
+});
+
+
+// ─── CHAT WIDGET ───
+let chatOpen = false;
+let chatStep = 0;
+
+function toggleChat() {
+  chatOpen = !chatOpen;
+  const w = document.getElementById('chat-widget');
+  w.classList.toggle('open', chatOpen);
+  document.getElementById('chat-btn').innerHTML = chatOpen ? '✕' : '💬<div class="chat-unread" id="chat-unread" style="display:none">1</div>';
+  if (chatOpen) document.getElementById('chat-unread') && (document.getElementById('chat-unread').style.display='none');
+}
+
+function chatSelect(msg) {
+  const body = document.getElementById('chat-body');
+  const opts = document.getElementById('chat-options');
+  if (opts) opts.remove();
+
+  // Show user message
+  body.innerHTML += `<div style="display:flex;justify-content:flex-end"><div><div class="chat-bubble user">${msg}</div><div class="chat-time" style="text-align:right">Сейчас</div></div></div>`;
+
+  // Bot response
+  setTimeout(() => {
+    let reply = '';
+    let waLink = '';
+    if (msg.includes('вызвать') || msg.includes('мастера')) {
+      reply = 'Отлично! Оставьте заявку на сайте или напишите нам в WhatsApp — мастер приедет за 30 минут 🚗';
+      waLink = 'Написать в WhatsApp →';
+    } else if (msg.includes('стоимость') || msg.includes('цена')) {
+      reply = 'Воспользуйтесь нашим калькулятором ↑ или напишите модель телефона и проблему — скажем цену сразу!';
+    } else if (msg.includes('статус') || msg.includes('заявки')) {
+      reply = 'Введите номер вашей заявки в разделе "Статус" на сайте или войдите в личный кабинет.';
+    } else {
+      reply = 'Спасибо за обращение! Напишите нам в WhatsApp — ответим быстро 📱';
+      waLink = 'Открыть WhatsApp →';
+    }
+    body.innerHTML += `<div><div class="chat-bubble">${reply}${waLink ? `<br><a href="https://wa.me/77072950865" target="_blank" style="color:var(--red);font-weight:600;font-size:.78rem">${waLink}</a>` : ''}</div><div class="chat-time">Сейчас</div></div>`;
+    body.scrollTop = body.scrollHeight;
+  }, 800);
+  body.scrollTop = body.scrollHeight;
+}
+
+function sendChat() {
+  const inp = document.getElementById('chat-input');
+  const msg = inp.value.trim();
+  if (!msg) return;
+  inp.value = '';
+  chatSelect(msg);
+}
+
+
 // ─── FAQ ───
 function toggleFaq(el) {
   const item = el.parentElement;
@@ -1417,14 +1743,85 @@ function toggleFaq(el) {
 
 // ─── CALCULATOR ───
 const CALC_PRICES = {
-  iphone16: {screen:'от 35 000 ₸',battery:'от 12 000 ₸',water:'от 18 000 ₸',charge:'от 10 000 ₸',camera:'от 20 000 ₸',sound:'от 8 000 ₸'},
-  iphone13: {screen:'от 22 000 ₸',battery:'от 9 000 ₸',water:'от 14 000 ₸',charge:'от 8 000 ₸',camera:'от 14 000 ₸',sound:'от 6 000 ₸'},
-  iphone11: {screen:'от 14 000 ₸',battery:'от 7 000 ₸',water:'от 11 000 ₸',charge:'от 6 000 ₸',camera:'от 10 000 ₸',sound:'от 5 000 ₸'},
-  iphoneold:{screen:'от 8 000 ₸',battery:'от 5 000 ₸',water:'от 7 000 ₸',charge:'от 4 000 ₸',camera:'от 6 000 ₸',sound:'от 3 500 ₸'},
-  samsung_s:{screen:'от 18 000 ₸',battery:'от 7 000 ₸',water:'от 12 000 ₸',charge:'от 6 000 ₸',camera:'от 10 000 ₸',sound:'от 5 000 ₸'},
-  samsung_a:{screen:'от 10 000 ₸',battery:'от 5 000 ₸',water:'от 8 000 ₸',charge:'от 4 000 ₸',camera:'от 7 000 ₸',sound:'от 3 500 ₸'},
-  xiaomi:   {screen:'от 8 000 ₸',battery:'от 4 500 ₸',water:'от 7 000 ₸',charge:'от 3 500 ₸',camera:'от 6 000 ₸',sound:'от 3 000 ₸'},
-  other:    {screen:'от 6 000 ₸',battery:'от 4 000 ₸',water:'от 6 000 ₸',charge:'от 3 000 ₸',camera:'от 5 000 ₸',sound:'от 3 000 ₸'},
+  // iPhone 16
+  ip16promax:{screen:'от 55 000 ₸',battery:'от 18 000 ₸',water:'от 22 000 ₸',charge:'от 14 000 ₸',camera:'от 28 000 ₸',sound:'от 10 000 ₸'},
+  ip16pro:   {screen:'от 50 000 ₸',battery:'от 17 000 ₸',water:'от 20 000 ₸',charge:'от 13 000 ₸',camera:'от 25 000 ₸',sound:'от 9 000 ₸'},
+  ip16plus:  {screen:'от 42 000 ₸',battery:'от 15 000 ₸',water:'от 18 000 ₸',charge:'от 11 000 ₸',camera:'от 20 000 ₸',sound:'от 8 000 ₸'},
+  ip16:      {screen:'от 38 000 ₸',battery:'от 14 000 ₸',water:'от 16 000 ₸',charge:'от 10 000 ₸',camera:'от 18 000 ₸',sound:'от 7 500 ₸'},
+  // iPhone 15
+  ip15promax:{screen:'от 48 000 ₸',battery:'от 16 000 ₸',water:'от 20 000 ₸',charge:'от 13 000 ₸',camera:'от 25 000 ₸',sound:'от 9 000 ₸'},
+  ip15pro:   {screen:'от 44 000 ₸',battery:'от 15 000 ₸',water:'от 18 000 ₸',charge:'от 12 000 ₸',camera:'от 22 000 ₸',sound:'от 8 500 ₸'},
+  ip15plus:  {screen:'от 38 000 ₸',battery:'от 13 000 ₸',water:'от 16 000 ₸',charge:'от 10 000 ₸',camera:'от 18 000 ₸',sound:'от 7 500 ₸'},
+  ip15:      {screen:'от 34 000 ₸',battery:'от 12 000 ₸',water:'от 15 000 ₸',charge:'от 9 500 ₸', camera:'от 16 000 ₸',sound:'от 7 000 ₸'},
+  // iPhone 14
+  ip14promax:{screen:'от 40 000 ₸',battery:'от 14 000 ₸',water:'от 17 000 ₸',charge:'от 11 000 ₸',camera:'от 20 000 ₸',sound:'от 8 000 ₸'},
+  ip14pro:   {screen:'от 36 000 ₸',battery:'от 13 000 ₸',water:'от 15 000 ₸',charge:'от 10 000 ₸',camera:'от 18 000 ₸',sound:'от 7 500 ₸'},
+  ip14plus:  {screen:'от 30 000 ₸',battery:'от 11 000 ₸',water:'от 13 000 ₸',charge:'от 9 000 ₸', camera:'от 15 000 ₸',sound:'от 6 500 ₸'},
+  ip14:      {screen:'от 26 000 ₸',battery:'от 10 000 ₸',water:'от 12 000 ₸',charge:'от 8 500 ₸', camera:'от 14 000 ₸',sound:'от 6 000 ₸'},
+  // iPhone 13
+  ip13promax:{screen:'от 32 000 ₸',battery:'от 12 000 ₸',water:'от 14 000 ₸',charge:'от 9 500 ₸', camera:'от 16 000 ₸',sound:'от 7 000 ₸'},
+  ip13pro:   {screen:'от 28 000 ₸',battery:'от 11 000 ₸',water:'от 13 000 ₸',charge:'от 9 000 ₸', camera:'от 14 000 ₸',sound:'от 6 500 ₸'},
+  ip13:      {screen:'от 22 000 ₸',battery:'от 9 000 ₸', water:'от 11 000 ₸',charge:'от 8 000 ₸', camera:'от 12 000 ₸',sound:'от 5 500 ₸'},
+  ip13mini:  {screen:'от 18 000 ₸',battery:'от 8 000 ₸', water:'от 10 000 ₸',charge:'от 7 000 ₸', camera:'от 10 000 ₸',sound:'от 5 000 ₸'},
+  // iPhone 12
+  ip12promax:{screen:'от 26 000 ₸',battery:'от 10 000 ₸',water:'от 12 000 ₸',charge:'от 8 500 ₸', camera:'от 14 000 ₸',sound:'от 6 000 ₸'},
+  ip12pro:   {screen:'от 22 000 ₸',battery:'от 9 000 ₸', water:'от 11 000 ₸',charge:'от 8 000 ₸', camera:'от 12 000 ₸',sound:'от 5 500 ₸'},
+  ip12:      {screen:'от 18 000 ₸',battery:'от 8 000 ₸', water:'от 10 000 ₸',charge:'от 7 000 ₸', camera:'от 10 000 ₸',sound:'от 5 000 ₸'},
+  ip12mini:  {screen:'от 15 000 ₸',battery:'от 7 000 ₸', water:'от 9 000 ₸', charge:'от 6 500 ₸', camera:'от 9 000 ₸', sound:'от 4 500 ₸'},
+  // iPhone 11
+  ip11promax:{screen:'от 20 000 ₸',battery:'от 8 500 ₸', water:'от 10 000 ₸',charge:'от 7 500 ₸', camera:'от 11 000 ₸',sound:'от 5 000 ₸'},
+  ip11pro:   {screen:'от 18 000 ₸',battery:'от 8 000 ₸', water:'от 9 500 ₸', charge:'от 7 000 ₸', camera:'от 10 000 ₸',sound:'от 4 500 ₸'},
+  ip11:      {screen:'от 14 000 ₸',battery:'от 7 000 ₸', water:'от 8 500 ₸', charge:'от 6 000 ₸', camera:'от 8 000 ₸', sound:'от 4 000 ₸'},
+  // iPhone X
+  ipxsmax:   {screen:'от 16 000 ₸',battery:'от 7 500 ₸', water:'от 9 000 ₸', charge:'от 6 500 ₸', camera:'от 9 000 ₸', sound:'от 4 500 ₸'},
+  ipxs:      {screen:'от 14 000 ₸',battery:'от 7 000 ₸', water:'от 8 500 ₸', charge:'от 6 000 ₸', camera:'от 8 500 ₸', sound:'от 4 000 ₸'},
+  ipxr:      {screen:'от 12 000 ₸',battery:'от 6 500 ₸', water:'от 8 000 ₸', charge:'от 5 500 ₸', camera:'от 7 500 ₸', sound:'от 3 500 ₸'},
+  ipx:       {screen:'от 13 000 ₸',battery:'от 6 500 ₸', water:'от 8 000 ₸', charge:'от 5 500 ₸', camera:'от 8 000 ₸', sound:'от 4 000 ₸'},
+  // iPhone 8/7/6
+  ip8plus:   {screen:'от 10 000 ₸',battery:'от 5 500 ₸', water:'от 7 000 ₸', charge:'от 4 500 ₸', camera:'от 6 500 ₸', sound:'от 3 500 ₸'},
+  ip8:       {screen:'от 9 000 ₸', battery:'от 5 000 ₸', water:'от 6 500 ₸', charge:'от 4 000 ₸', camera:'от 6 000 ₸', sound:'от 3 000 ₸'},
+  ip7plus:   {screen:'от 8 000 ₸', battery:'от 4 500 ₸', water:'от 6 000 ₸', charge:'от 3 500 ₸', camera:'от 5 500 ₸', sound:'от 3 000 ₸'},
+  ip7:       {screen:'от 7 000 ₸', battery:'от 4 000 ₸', water:'от 5 500 ₸', charge:'от 3 500 ₸', camera:'от 5 000 ₸', sound:'от 2 500 ₸'},
+  ip6splus:  {screen:'от 6 000 ₸', battery:'от 3 500 ₸', water:'от 5 000 ₸', charge:'от 3 000 ₸', camera:'от 4 500 ₸', sound:'от 2 500 ₸'},
+  ip6s:      {screen:'от 5 000 ₸', battery:'от 3 000 ₸', water:'от 4 500 ₸', charge:'от 2 500 ₸', camera:'от 4 000 ₸', sound:'от 2 000 ₸'},
+  ip6:       {screen:'от 4 500 ₸', battery:'от 3 000 ₸', water:'от 4 000 ₸', charge:'от 2 500 ₸', camera:'от 3 500 ₸', sound:'от 2 000 ₸'},
+  // Samsung S
+  s24ultra:  {screen:'от 45 000 ₸',battery:'от 14 000 ₸',water:'от 18 000 ₸',charge:'от 11 000 ₸',camera:'от 22 000 ₸',sound:'от 8 000 ₸'},
+  s24plus:   {screen:'от 38 000 ₸',battery:'от 12 000 ₸',water:'от 16 000 ₸',charge:'от 10 000 ₸',camera:'от 18 000 ₸',sound:'от 7 000 ₸'},
+  s24:       {screen:'от 32 000 ₸',battery:'от 11 000 ₸',water:'от 14 000 ₸',charge:'от 9 000 ₸', camera:'от 15 000 ₸',sound:'от 6 500 ₸'},
+  s23ultra:  {screen:'от 40 000 ₸',battery:'от 13 000 ₸',water:'от 16 000 ₸',charge:'от 10 500 ₸',camera:'от 20 000 ₸',sound:'от 7 500 ₸'},
+  s23plus:   {screen:'от 34 000 ₸',battery:'от 11 000 ₸',water:'от 14 000 ₸',charge:'от 9 500 ₸', camera:'от 16 000 ₸',sound:'от 7 000 ₸'},
+  s23:       {screen:'от 28 000 ₸',battery:'от 10 000 ₸',water:'от 12 000 ₸',charge:'от 8 500 ₸', camera:'от 14 000 ₸',sound:'от 6 000 ₸'},
+  s22ultra:  {screen:'от 36 000 ₸',battery:'от 12 000 ₸',water:'от 15 000 ₸',charge:'от 10 000 ₸',camera:'от 18 000 ₸',sound:'от 7 000 ₸'},
+  s22plus:   {screen:'от 28 000 ₸',battery:'от 10 000 ₸',water:'от 12 000 ₸',charge:'от 8 500 ₸', camera:'от 14 000 ₸',sound:'от 6 000 ₸'},
+  s22:       {screen:'от 24 000 ₸',battery:'от 9 000 ₸', water:'от 11 000 ₸',charge:'от 7 500 ₸', camera:'от 12 000 ₸',sound:'от 5 500 ₸'},
+  s21ultra:  {screen:'от 32 000 ₸',battery:'от 11 000 ₸',water:'от 13 000 ₸',charge:'от 9 000 ₸', camera:'от 16 000 ₸',sound:'от 6 500 ₸'},
+  s21plus:   {screen:'от 25 000 ₸',battery:'от 9 500 ₸', water:'от 11 000 ₸',charge:'от 8 000 ₸', camera:'от 12 000 ₸',sound:'от 5 500 ₸'},
+  s21:       {screen:'от 20 000 ₸',battery:'от 8 500 ₸', water:'от 10 000 ₸',charge:'от 7 000 ₸', camera:'от 10 000 ₸',sound:'от 5 000 ₸'},
+  s20ultra:  {screen:'от 28 000 ₸',battery:'от 10 000 ₸',water:'от 12 000 ₸',charge:'от 8 500 ₸', camera:'от 14 000 ₸',sound:'от 6 000 ₸'},
+  s20:       {screen:'от 18 000 ₸',battery:'от 8 000 ₸', water:'от 9 500 ₸', charge:'от 7 000 ₸', camera:'от 9 000 ₸', sound:'от 4 500 ₸'},
+  // Samsung A
+  a55:       {screen:'от 14 000 ₸',battery:'от 6 000 ₸', water:'от 8 000 ₸', charge:'от 5 000 ₸', camera:'от 8 000 ₸', sound:'от 4 000 ₸'},
+  a54:       {screen:'от 12 000 ₸',battery:'от 5 500 ₸', water:'от 7 500 ₸', charge:'от 4 500 ₸', camera:'от 7 500 ₸', sound:'от 3 500 ₸'},
+  a35:       {screen:'от 11 000 ₸',battery:'от 5 000 ₸', water:'от 7 000 ₸', charge:'от 4 000 ₸', camera:'от 7 000 ₸', sound:'от 3 500 ₸'},
+  a34:       {screen:'от 10 000 ₸',battery:'от 5 000 ₸', water:'от 6 500 ₸', charge:'от 4 000 ₸', camera:'от 6 500 ₸', sound:'от 3 000 ₸'},
+  a25:       {screen:'от 9 000 ₸', battery:'от 4 500 ₸', water:'от 6 000 ₸', charge:'от 3 500 ₸', camera:'от 6 000 ₸', sound:'от 3 000 ₸'},
+  a24:       {screen:'от 8 500 ₸', battery:'от 4 500 ₸', water:'от 6 000 ₸', charge:'от 3 500 ₸', camera:'от 5 500 ₸', sound:'от 3 000 ₸'},
+  a15:       {screen:'от 8 000 ₸', battery:'от 4 000 ₸', water:'от 5 500 ₸', charge:'от 3 500 ₸', camera:'от 5 000 ₸', sound:'от 2 500 ₸'},
+  a14:       {screen:'от 7 500 ₸', battery:'от 4 000 ₸', water:'от 5 000 ₸', charge:'от 3 000 ₸', camera:'от 4 500 ₸', sound:'от 2 500 ₸'},
+  a05:       {screen:'от 6 500 ₸', battery:'от 3 500 ₸', water:'от 4 500 ₸', charge:'от 3 000 ₸', camera:'от 4 000 ₸', sound:'от 2 500 ₸'},
+  // Samsung Note/Fold/Flip
+  note20ultra:{screen:'от 30 000 ₸',battery:'от 11 000 ₸',water:'от 13 000 ₸',charge:'от 9 000 ₸',camera:'от 15 000 ₸',sound:'от 6 000 ₸'},
+  note20:    {screen:'от 22 000 ₸',battery:'от 9 000 ₸', water:'от 11 000 ₸',charge:'от 7 500 ₸', camera:'от 11 000 ₸',sound:'от 5 000 ₸'},
+  z_fold5:   {screen:'от 60 000 ₸',battery:'от 18 000 ₸',water:'от 25 000 ₸',charge:'от 15 000 ₸',camera:'от 30 000 ₸',sound:'от 12 000 ₸'},
+  z_fold4:   {screen:'от 50 000 ₸',battery:'от 16 000 ₸',water:'от 22 000 ₸',charge:'от 13 000 ₸',camera:'от 25 000 ₸',sound:'от 10 000 ₸'},
+  z_flip5:   {screen:'от 35 000 ₸',battery:'от 13 000 ₸',water:'от 18 000 ₸',charge:'от 11 000 ₸',camera:'от 18 000 ₸',sound:'от 8 000 ₸'},
+  z_flip4:   {screen:'от 30 000 ₸',battery:'от 12 000 ₸',water:'от 16 000 ₸',charge:'от 10 000 ₸',camera:'от 16 000 ₸',sound:'от 7 000 ₸'},
+  // Others
+  xiaomi_flag:{screen:'от 14 000 ₸',battery:'от 6 000 ₸',water:'от 9 000 ₸',charge:'от 5 000 ₸',camera:'от 8 000 ₸',sound:'от 4 000 ₸'},
+  xiaomi_mid: {screen:'от 8 000 ₸', battery:'от 4 500 ₸',water:'от 6 000 ₸',charge:'от 3 500 ₸',camera:'от 5 500 ₸',sound:'от 3 000 ₸'},
+  huawei:    {screen:'от 10 000 ₸',battery:'от 5 000 ₸',water:'от 7 000 ₸',charge:'от 4 000 ₸',camera:'от 7 000 ₸',sound:'от 3 500 ₸'},
+  other:     {screen:'от 6 000 ₸', battery:'от 4 000 ₸',water:'от 5 500 ₸',charge:'от 3 000 ₸',camera:'от 5 000 ₸',sound:'от 3 000 ₸'},
 };
 function calcPrice() {
   const brand = document.getElementById('calc-brand').value;
@@ -1459,6 +1856,40 @@ document.getElementById('track-input').addEventListener('keydown', e => { if(e.k
   <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.118 1.528 5.852L0 24l6.335-1.524A11.954 11.954 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.006-1.372l-.359-.213-3.722.896.929-3.624-.234-.372A9.818 9.818 0 1112 21.818z"/></svg>
   <span class="wa-tooltip">Написать в WhatsApp</span>
 </a>
+
+
+<!-- CHAT WIDGET -->
+<button class="chat-toggle-btn" onclick="toggleChat()" id="chat-btn" title="Онлайн чат">
+  💬
+  <div class="chat-unread" id="chat-unread">1</div>
+</button>
+
+<div class="chat-widget" id="chat-widget">
+  <div class="chat-header">
+    <div class="chat-header-avatar">🔧</div>
+    <div class="chat-header-info">
+      <div class="chat-header-name">Тез-Тез Жөнде</div>
+      <div class="chat-header-status">● Онлайн · Ответим за 5 минут</div>
+    </div>
+    <button class="chat-close" onclick="toggleChat()">✕</button>
+  </div>
+  <div class="chat-body" id="chat-body">
+    <div>
+      <div class="chat-bubble">Здравствуйте! 👋 Чем могу помочь?</div>
+      <div class="chat-time">Сейчас</div>
+    </div>
+    <div class="chat-options" id="chat-options">
+      <button class="chat-opt" onclick="chatSelect('Хочу вызвать мастера')">🔧 Вызвать мастера</button>
+      <button class="chat-opt" onclick="chatSelect('Узнать стоимость ремонта')">💰 Узнать стоимость</button>
+      <button class="chat-opt" onclick="chatSelect('Статус моей заявки')">📍 Статус заявки</button>
+      <button class="chat-opt" onclick="chatSelect('Другой вопрос')">💬 Другой вопрос</button>
+    </div>
+  </div>
+  <div class="chat-footer">
+    <input class="chat-input" id="chat-input" placeholder="Напишите сообщение..." onkeydown="if(event.key==='Enter')sendChat()"/>
+    <button class="chat-send" onclick="sendChat()">➤</button>
+  </div>
+</div>
 
 </body>
 </html>
