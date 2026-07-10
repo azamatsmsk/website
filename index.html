@@ -1659,13 +1659,36 @@ async function submitTradeIn() {
 
 // ─── CONTACT FORM ───
 let orderCounter = 100 + Math.floor(Math.random() * 50);
-function submitForm() {
+async function submitForm() {
   const name = document.getElementById('f-name').value.trim();
   const phone = document.getElementById('f-phone').value.trim();
   if (!name || !phone) { alert('Укажите имя и телефон'); return; }
-  orderCounter++;
-  const orderId = 'МФ-2025-' + String(orderCounter).padStart(4,'0');
-  ORDERS[orderId] = { device: document.getElementById('f-brand').value||'Смартфон', issue: document.getElementById('f-issue').value||'Не указано', status:'received', address: document.getElementById('f-address').value||'', price:'Уточняется', created: new Date().toLocaleString('ru-KZ',{day:'numeric',month:'long',hour:'2-digit',minute:'2-digit'}), master:null, timeline:[{label:'Заявка принята',icon:'📋',done:true,time:new Date().toLocaleTimeString('ru-KZ',{hour:'2-digit',minute:'2-digit'})},{label:'Мастер назначен',icon:'👨‍🔧',done:false,time:''},{label:'Мастер едет',icon:'🚗',done:false,time:''},{label:'В работе',icon:'🔧',done:false,time:''},{label:'Готово',icon:'✅',done:false,time:''}]};
+
+  const device = document.getElementById('f-brand').value || 'Смартфон';
+  const issue = document.getElementById('f-issue').value || 'Не указано';
+  const address = document.getElementById('f-address').value || '';
+  const rawComment = document.getElementById('f-comment').value || '';
+  const comment = `Имя: ${name}, Телефон: ${phone}` + (rawComment ? `. ${rawComment}` : '');
+
+  const btn = document.querySelector('#form-wrap .btn-primary');
+  if (btn) { btn.disabled = true; btn.textContent = 'Отправка...'; }
+
+  const { data, error } = await sb
+    .from('requests')
+    .insert({ device, issue, address, comment, status: 'received' })
+    .select()
+    .single();
+
+  if (btn) { btn.disabled = false; btn.textContent = 'Вызвать мастера →'; }
+
+  if (error) {
+    alert('Не удалось отправить заявку. Попробуйте ещё раз или напишите нам в WhatsApp.');
+    console.error('submitForm insert error:', error);
+    return;
+  }
+
+  const orderId = 'МФ-2025-' + data.id.slice(0, 4).toUpperCase();
+  ORDERS[orderId] = { device, issue, status:'received', address, price:'Уточняется', created: new Date().toLocaleString('ru-KZ',{day:'numeric',month:'long',hour:'2-digit',minute:'2-digit'}), master:null, timeline:[{label:'Заявка принята',icon:'📋',done:true,time:new Date().toLocaleTimeString('ru-KZ',{hour:'2-digit',minute:'2-digit'})},{label:'Мастер назначен',icon:'👨‍🔧',done:false,time:''},{label:'Мастер едет',icon:'🚗',done:false,time:''},{label:'В работе',icon:'🔧',done:false,time:''},{label:'Готово',icon:'✅',done:false,time:''}]};
   document.getElementById('form-wrap').style.display='none';
   document.getElementById('form-success').style.display='block';
   document.getElementById('osb-id').textContent=orderId;
